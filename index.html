@@ -1113,7 +1113,7 @@ const VERSES = [
   { text: "For I know the plans I have for you, declares the Lord, plans to prosper you and not to harm you.", ref: "Jeremiah 29:11" },
   { text: "Cast all your anxiety on Him because He cares for you.", ref: "1 Peter 5:7" },
 ];
-const PROFANITY = ["damn","hell","crap","ass","bastard","idiot","stupid","dumb","loser","wtf","bs","shit","fuck"];
+const PROFANITY = ["damn","hell","crap","ass","bastard","idiot","stupid","dumb","loser","wtf","bs","shit","fuck","pussy","nigger"];
 
 const v = VERSES[new Date().getDay() % VERSES.length];
 document.getElementById('verseText').textContent = v.text;
@@ -1449,7 +1449,7 @@ async function submitReport() {
       details:document.getElementById('reportDetails').value,
       reportedBy:currentUser.uid, createdAt:serverTimestamp(),
     });
-    toast('Report submitted. Thank you. ✝️','success');
+    toast('Report submitted. Thank you for keeping the platform safe. ✝️','success');
   } catch(e){toast('Could not submit report.','error');}
   reportTarget=null;
 }
