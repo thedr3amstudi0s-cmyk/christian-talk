@@ -1232,7 +1232,7 @@ async function doRegister() {
   try {
     const c = await createUserWithEmailAndPassword(auth,email,pass);
     await updateProfile(c.user,{displayName:name});
-    toast(`Welcome to GraceQ, ${name}! ✝️`,'success');
+    toast(`Welcome to GraceQ, ${name}!`,'success');
     goPage('feed');
   } catch(e) {
     err.textContent = e.code==='auth/email-already-in-use' ? 'That email is already registered.' : e.message;
