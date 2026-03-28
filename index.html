@@ -18,6 +18,11 @@
   --tag-bg:#eee6d4;--tag-text:#5a3a1a;
   --header-h:56px;--bottom-h:62px;
   --mod:#7b2d8b;--mod2:#9c3daf;
+  /* tier colours */
+  --t1:#2d7a4f;   /* helper  – green  */
+  --t2:#1a6aa0;   /* mod     – blue   */
+  --t3:#7b2d8b;   /* admin   – purple */
+  --t4:#8b1a1a;   /* owner   – crimson*/
 }
 [data-theme="dark"]{
   --bg:#0d0f18;--bg2:#141720;--surface:#1a1e2e;--surface2:#222740;
@@ -29,6 +34,7 @@
   --shadow:rgba(0,0,0,.4);--shadow2:rgba(0,0,0,.2);
   --tag-bg:#222740;--tag-text:#b0a488;
   --mod:#9c3daf;--mod2:#b84fd4;
+  --t1:#3aaa6a;--t2:#3a8ac0;--t3:#9c3daf;--t4:#c04040;
 }
 *{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent;}
 html{scroll-behavior:smooth;}
@@ -213,8 +219,21 @@ select.field-input{cursor:pointer;}
 .mod-item-card .mi-meta{font-size:.73rem;color:var(--text3);}
 .mod-item-card .mi-body{font-size:.8rem;color:var(--text2);margin-top:5px;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;}
 .mod-item-card .mi-actions{display:flex;gap:7px;margin-top:10px;flex-wrap:wrap;}
-.mod-badge{background:var(--mod);color:#fff;font-size:.6rem;font-weight:800;padding:2px 7px;border-radius:4px;letter-spacing:.06em;text-transform:uppercase;}
+.mod-badge{color:#fff;font-size:.6rem;font-weight:800;padding:2px 7px;border-radius:4px;letter-spacing:.06em;text-transform:uppercase;}
+.mod-badge.t1{background:var(--t1);}
+.mod-badge.t2{background:var(--t2);}
+.mod-badge.t3{background:var(--t3);}
+.mod-badge.t4{background:var(--t4);box-shadow:0 0 6px rgba(139,26,26,.4);}
 .banned-badge{background:var(--danger);color:#fff;font-size:.6rem;font-weight:800;padding:2px 7px;border-radius:4px;}
+/* tier info bar in mod panel */
+.tier-legend{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:12px;}
+.tier-pill{font-size:.7rem;font-weight:800;padding:4px 10px;border-radius:12px;color:#fff;display:flex;align-items:center;gap:4px;}
+.tier-pill.t1{background:var(--t1);}
+.tier-pill.t2{background:var(--t2);}
+.tier-pill.t3{background:var(--t3);}
+.tier-pill.t4{background:var(--t4);}
+/* promote/demote select */
+.tier-select{font-family:'Nunito',sans-serif;font-size:.75rem;font-weight:700;padding:5px 8px;border-radius:7px;border:1.5px solid var(--border);background:var(--surface);color:var(--text);cursor:pointer;outline:none;}
 
 /* PROFILE PAGE */
 .profile-page{padding:14px 14px 0;}
@@ -560,7 +579,13 @@ select.field-input{cursor:pointer;}
   <div class="mod-page">
     <div class="mod-header">
       <h2>🛡 Moderation Panel</h2>
-      <p>GraceQ Community Management</p>
+      <p id="modHeaderSub">GraceQ Community Management</p>
+      <div class="tier-legend" style="margin-top:10px">
+        <span class="tier-pill t1">T1 Helper</span>
+        <span class="tier-pill t2">T2 Moderator</span>
+        <span class="tier-pill t3">T3 Admin</span>
+        <span class="tier-pill t4">T4 Owner</span>
+      </div>
     </div>
     <div class="mod-tabs">
       <button class="mod-tab active" onclick="modTab('reports',this)">⚑ Reports</button>
@@ -706,7 +731,7 @@ const db   = getFirestore(app);
 /* ─────────────── STATE ─────────────── */
 let CU = null;           // currentUser (Firebase)
 let userDoc = null;      // Firestore user doc
-let isMod = false;
+let modLevel = 0;        // 0=none 1=helper 2=mod 3=admin 4=owner
 let allQuestions = [];
 let currentSort = 'newest';
 let currentTopic = '';
@@ -714,15 +739,37 @@ let anonPost = false;
 let selTopicVal = 'Scripture';
 let isDark = false;
 
-let chatQid = null;      // active chat question id
+// ── HARDCODED OWNER UID ── set this to YOUR Firebase UID
+const OWNER_UID = 'i0P20BtEDMa7la1lZPlcKXoOWmq1';
+
+let chatQid = null;
 let chatUnsub = null;
-let dmTarget = null;     // {uid, name}
+let dmTarget = null;
 let dmUnsub = null;
-let dmConvos = [];       // list of DM conversations
+let dmConvos = [];
 let reportTarget = null;
-let deleteTarget = null; // {type, id, parentId?}
+let deleteTarget = null;
 
 window._chatQid = null;
+
+/* tier helpers */
+function tierLabel(lvl){return['','Helper','Moderator','Admin','Owner'][lvl]||'';}
+function tierClass(lvl){return['','t1','t2','t3','t4'][lvl]||'';}
+function tierBadgeHtml(lvl){
+  if(!lvl)return'';
+  const icons=['','🟢','🔵','🟣','👑'];
+  return `<span class="mod-badge ${tierClass(lvl)}">${icons[lvl]} ${tierLabel(lvl)}</span>`;
+}
+// permission gates
+const can={
+  deleteComments: ()=>modLevel>=1,
+  deleteQuestions:()=>modLevel>=2,
+  resolveReports: ()=>modLevel>=2,
+  banUsers:       ()=>modLevel>=3,
+  promoteUsers:   ()=>modLevel>=3,
+  demoteAdmins:   ()=>modLevel>=4,
+  setOwner:       ()=>modLevel>=4,
+};
 
 /* ─────────────── HELPERS ─────────────── */
 const $ = id => document.getElementById(id);
@@ -756,7 +803,7 @@ Object.assign(window,{
   submitQuestion,doLogin,doRegister,doSignOut,doForgotPass,checkVerified,resendVerify,
   openChat,closeChat,sendMsg,openDM,sendDM,closeDMSheet,showNewDM,startNewDM,
   showReport,submitReport,closeModal,switchTab,selTopic,toggleAnon,
-  modTab,modDeleteQ,modDeleteC,modBanUser,confirmDelete,
+  modTab,modDeleteQ,modDeleteC,modBanUser,confirmDelete,setUserTier,unbanUser,
   onBookChange,changeChap,loadChapter,
 });
 
@@ -809,12 +856,18 @@ onAuthStateChanged(auth, async user=>{
   const askCard=$('askCardWrap'), askGate=$('askGate');
   const dmGate=$('dmGate'), dmListArea=$('dmListArea');
   if(user){
-    // fetch user doc
-    try{
-      const ud=await getDoc(doc(db,'users',user.uid));
-      userDoc=ud.exists()?ud.data():null;
-      isMod=userDoc?.isMod===true;
-    }catch(e){isMod=false;}
+    // Determine mod level
+    modLevel=0;
+    if(user.uid===OWNER_UID){
+      modLevel=4; // Owner – hardcoded, cannot be revoked
+    }else{
+      try{
+        const ud=await getDoc(doc(db,'users',user.uid));
+        userDoc=ud.exists()?ud.data():null;
+        const lvl=parseInt(userDoc?.modLevel||0);
+        modLevel=isNaN(lvl)?0:Math.min(lvl,3); // cap non-owner at 3
+      }catch(e){modLevel=0;}
+    }
 
     const name=user.displayName||user.email.split('@')[0];
     authArea.style.display='none';profileArea.style.display='block';
@@ -824,16 +877,15 @@ onAuthStateChanged(auth, async user=>{
     $('headerAuthEl').innerHTML=`<div class="user-av-btn" onclick="goPage('profile')">${name[0].toUpperCase()}</div>`;
     askCard.style.display='block';askGate.style.display='none';
     dmGate.style.display='none';dmListArea.style.display='block';
-    $('modBadgeArea').innerHTML=isMod?'<span class="mod-badge">🛡 Moderator</span>':'';
+    $('modBadgeArea').innerHTML=tierBadgeHtml(modLevel);
+    $('modHeaderSub').textContent=`Signed in as ${tierLabel(modLevel)||'Member'} · ${name}`;
 
-    // inject mod nav
     injectModNav();
 
-    // save user doc
     try{await setDoc(doc(db,'users',user.uid),{displayName:name,email:user.email,lastSeen:serverTimestamp()},{merge:true});}catch(e){}
     loadDMConvos();
   }else{
-    CU=null;isMod=false;userDoc=null;
+    CU=null;modLevel=0;userDoc=null;
     authArea.style.display='block';profileArea.style.display='none';
     $('headerAuthEl').innerHTML=`<button class="icon-btn" onclick="goPage('profile')" style="font-size:.72rem;font-weight:800;width:auto;padding:0 11px;border-radius:20px;letter-spacing:.03em;">Sign In</button>`;
     askCard.style.display='none';askGate.style.display='block';
@@ -843,16 +895,16 @@ onAuthStateChanged(auth, async user=>{
 });
 
 function injectModNav(){
-  if(!isMod)return;
+  if(modLevel<1)return;
   if($('nav-mod'))return;
   const nav=document.querySelector('.bottom-nav');
   const btn=document.createElement('button');
   btn.className='nav-item mod-nav';btn.id='nav-mod';
-  btn.innerHTML='<span class="nav-icon">🛡</span>Mod';
+  const icon=modLevel===4?'👑':modLevel===3?'⚙️':modLevel===2?'🛡':'🟢';
+  btn.innerHTML=`<span class="nav-icon">${icon}</span>${tierLabel(modLevel)}`;
   btn.onclick=()=>goPage('mod');
   nav.appendChild(btn);
-  // adjust nav items font
-  document.querySelectorAll('.nav-item').forEach(n=>n.style.fontSize='.56rem');
+  document.querySelectorAll('.nav-item').forEach(n=>n.style.fontSize='.54rem');
 }
 function removeModNav(){$('nav-mod')?.remove();}
 
@@ -1195,16 +1247,19 @@ function showDelete(type,id,parentId,label){
 }
 async function confirmDelete(){
   closeModal('deleteModal');
-  if(!deleteTarget||!isMod){toast('Not authorized.','error');return;}
+  if(!deleteTarget){return;}
   try{
     if(deleteTarget.type==='question'){
+      if(!can.deleteQuestions()){toast('T2+ required to delete questions.','error');return;}
       await deleteDoc(doc(db,'questions',deleteTarget.id));
       toast('Question deleted.','success');
     }else if(deleteTarget.type==='comment'){
+      if(!can.deleteComments()){toast('T1+ required to delete answers.','error');return;}
       await deleteDoc(doc(db,'questions',deleteTarget.parentId,'comments',deleteTarget.id));
       await updateDoc(doc(db,'questions',deleteTarget.parentId),{commentCount:increment(-1)});
       toast('Answer deleted.','success');
     }else if(deleteTarget.type==='report'){
+      if(!can.resolveReports()){toast('T2+ required to resolve reports.','error');return;}
       await updateDoc(doc(db,'reports',deleteTarget.id),{status:'resolved',resolvedBy:CU.uid,resolvedAt:serverTimestamp()});
       toast('Report resolved.','success');
     }
@@ -1212,15 +1267,22 @@ async function confirmDelete(){
   }catch(e){toast('Error: '+e.message,'error');}
   deleteTarget=null;
 }
-function modDeleteQ(id){if(isMod)showDelete('question',id,null,'question');}
-function modDeleteC(qid,cid){if(isMod)showDelete('comment',cid,qid,'answer');}
-async function modBanUser(uid,name){
-  if(!isMod)return;
-  if(!confirm(`Ban user ${name}? They will not be able to post.`))return;
+function modDeleteQ(id){
+  if(!can.deleteQuestions()){toast('You need T2 Moderator or above to delete questions.','error');return;}
+  showDelete('question',id,null,'question');
+}
+function modDeleteC(qid,cid){
+  if(!can.deleteComments()){toast('You need T1 Helper or above to delete answers.','error');return;}
+  showDelete('comment',cid,qid,'answer');
+}
+async function modBanUser(uid,name,currentTierOfTarget){
+  if(!can.banUsers()){toast('T3 Admin or above required to ban users.','error');return;}
+  if(uid===OWNER_UID){toast('The Owner cannot be banned.','error');return;}
+  if(currentTierOfTarget>=3&&modLevel<4){toast('Only the Owner can ban Admins.','error');return;}
+  if(!confirm(`Ban ${name}? They won't be able to post.`))return;
   try{
     await setDoc(doc(db,'users',uid),{banned:true,bannedBy:CU.uid,bannedAt:serverTimestamp()},{merge:true});
-    toast(`${name} has been banned.`,'success');
-    renderModUsers();
+    toast(`${name} has been banned.`,'success');renderModUsers();
   }catch(e){toast('Error: '+e.message,'error');}
 }
 
@@ -1232,35 +1294,43 @@ function modTab(t,el){
   $('mod'+t.charAt(0).toUpperCase()+t.slice(1)).classList.add('active');
   if(t==='reports')renderModReports();
   if(t==='questions')renderModQuestions();
-  if(t==='comments')$('modCListEl').innerHTML=`<div class="empty"><div class="ei">💬</div><p>Click a question above to see its answers.</p></div>`;
-  if(t==='users')renderModUsers();
+  if(t==='comments')$('modCListEl').innerHTML=`<div class="empty"><div class="ei">💬</div><p>Click "View Answers" on a question first.</p></div>`;
+  if(t==='users'){
+    if(modLevel<3){
+      $('modUListEl').innerHTML=`<div class="empty"><div class="ei">🔒</div><p>T3 Admin or above required<br>to view the user list.</p></div>`;
+    }else{renderModUsers();}
+  }
 }
 
 async function renderModReports(){
-  if(!isMod)return;
+  if(modLevel<1)return;
   const el=$('reportsListEl');
   el.innerHTML=`<div style="text-align:center;padding:16px"><span class="spin" style="border-top-color:var(--mod)"></span></div>`;
   try{
     const snap=await getDocs(query(collection(db,'reports'),where('status','==','open'),orderBy('createdAt','desc')));
     if(!snap.docs.length){el.innerHTML=`<div class="empty"><div class="ei">✅</div><p>No open reports!</p></div>`;return;}
-    el.innerHTML=snap.docs.map(d=>{const r=d.data();return `
-      <div class="report-card">
+    el.innerHTML=snap.docs.map(d=>{const r=d.data();
+      const canDelQ=can.deleteQuestions()&&r.type==='question';
+      const canDelC=can.deleteComments()&&r.type==='comment';
+      const canResolve=can.resolveReports();
+      return `<div class="report-card">
         <div class="rc-type">⚑ ${r.type} report</div>
         <div class="rc-reason">${esc(r.reason)}</div>
         ${r.details?`<div class="rc-detail">${esc(r.details)}</div>`:''}
-        <div class="rc-meta">Reported by: ${esc(r.reportedByName||'—')} · ${timeAgo(r.createdAt)}<br>Target ID: <code>${esc(r.targetId)}</code></div>
+        <div class="rc-meta">By: ${esc(r.reportedByName||'—')} · ${timeAgo(r.createdAt)}<br><small>Target ID: ${esc(r.targetId)}</small></div>
         <div class="rc-actions">
-          ${r.type==='question'?`<button class="btn btn-danger" style="font-size:.75rem;padding:6px 11px" onclick="modDeleteQ('${r.targetId}');showDelete('report','${d.id}',null,'report')">Delete Question</button>`:''}
-          ${r.type==='comment'?`<button class="btn btn-danger" style="font-size:.75rem;padding:6px 11px" onclick="modDeleteC('unknown','${r.targetId}')">Delete Answer</button>`:''}
-          <button class="btn btn-mod" style="font-size:.75rem;padding:6px 11px" onclick="showDelete('report','${d.id}',null,'report')">Mark Resolved</button>
+          ${canDelQ?`<button class="btn btn-danger" style="font-size:.73rem;padding:5px 10px" onclick="modDeleteQ('${r.targetId}')">🗑 Delete Question</button>`:''}
+          ${canDelC?`<button class="btn btn-danger" style="font-size:.73rem;padding:5px 10px" onclick="modDeleteC('unknown','${r.targetId}')">🗑 Delete Answer</button>`:''}
+          ${canResolve?`<button class="btn btn-mod" style="font-size:.73rem;padding:5px 10px;background:var(--t2)" onclick="showDelete('report','${d.id}',null,'report')">✅ Resolve</button>`:''}
+          ${!canResolve?`<span style="font-size:.72rem;color:var(--text3)">T2+ to resolve</span>`:''}
         </div>
       </div>`;
     }).join('');
-  }catch(e){el.innerHTML=`<div class="empty"><p>Error loading reports.<br>${e.message}</p></div>`;}
+  }catch(e){el.innerHTML=`<div class="empty"><p>${e.message}</p></div>`;}
 }
 
 async function renderModQuestions(){
-  if(!isMod)return;
+  if(modLevel<1)return;
   const el=$('modQListEl');
   el.innerHTML=`<div style="text-align:center;padding:16px"><span class="spin" style="border-top-color:var(--mod)"></span></div>`;
   try{
@@ -1272,8 +1342,8 @@ async function renderModQuestions(){
         <div class="mi-meta">${esc(q.authorName||'—')} · ${esc(q.topic)} · ${timeAgo(q.createdAt)} · ${q.commentCount||0} answers</div>
         ${q.body?`<div class="mi-body">${esc(q.body)}</div>`:''}
         <div class="mi-actions">
-          <button class="btn" style="font-size:.73rem;padding:5px 10px;background:var(--surface2);border:1px solid var(--border);color:var(--text2);" onclick="loadModComments('${d.id}','${esc(q.title)}')">View Answers</button>
-          <button class="btn btn-danger" style="font-size:.73rem;padding:5px 10px" onclick="modDeleteQ('${d.id}')">🗑 Delete</button>
+          <button class="btn" style="font-size:.71rem;padding:4px 9px;background:var(--surface2);border:1px solid var(--border);color:var(--text2)" onclick="loadModComments('${d.id}','${esc(q.title)}')">💬 View Answers</button>
+          ${can.deleteQuestions()?`<button class="btn btn-danger" style="font-size:.71rem;padding:4px 9px" onclick="modDeleteQ('${d.id}')">🗑 Delete</button>`:`<span style="font-size:.7rem;color:var(--text3)">T2+ to delete</span>`}
         </div>
       </div>`;
     }).join('');
@@ -1292,7 +1362,9 @@ async function loadModComments(qid,qtitle){
         <div class="mi-meta">${esc(c.authorName||'—')} · ${timeAgo(c.createdAt)}</div>
         <div class="mi-body" style="-webkit-line-clamp:unset;display:block">${esc(c.text)}</div>
         <div class="mi-actions">
-          <button class="btn btn-danger" style="font-size:.73rem;padding:5px 10px" onclick="modDeleteC('${qid}','${d.id}')">🗑 Delete Answer</button>
+          ${can.deleteComments()
+            ?`<button class="btn btn-danger" style="font-size:.71rem;padding:4px 9px" onclick="modDeleteC('${qid}','${d.id}')">🗑 Delete Answer</button>`
+            :`<span style="font-size:.7rem;color:var(--text3)">T1+ to delete</span>`}
         </div>
       </div>`;
     }).join('');
@@ -1301,38 +1373,67 @@ async function loadModComments(qid,qtitle){
 }
 
 async function renderModUsers(){
-  if(!isMod)return;
+  if(modLevel<3)return; // only admin+ sees full user list
   const el=$('modUListEl');
   el.innerHTML=`<div style="text-align:center;padding:16px"><span class="spin" style="border-top-color:var(--mod)"></span></div>`;
   try{
-    const snap=await getDocs(query(collection(db,'users'),limit(100)));
+    const snap=await getDocs(query(collection(db,'users'),limit(200)));
     if(!snap.docs.length){el.innerHTML=`<div class="empty"><p>No users.</p></div>`;return;}
-    el.innerHTML=snap.docs.map(d=>{const u=d.data();const uid=d.id;return `
-      <div class="mod-item-card">
-        <div style="display:flex;align-items:center;gap:8px;margin-bottom:4px">
+    el.innerHTML=snap.docs.map(d=>{
+      const u=d.data();const uid=d.id;
+      const uTier=uid===OWNER_UID?4:parseInt(u.modLevel||0);
+      const isOwnerUser=uid===OWNER_UID;
+      const isSelf=uid===CU?.uid;
+      // what tiers can I assign? admin(3) can assign 1-2, owner(4) can assign 1-3
+      const maxAssignable=modLevel===4?3:modLevel===3?2:0;
+      let tierOptions='';
+      for(let t=0;t<=maxAssignable;t++){
+        tierOptions+=`<option value="${t}" ${uTier===t?'selected':''}>${t===0?'No Role':tierLabel(t)}</option>`;
+      }
+      return `<div class="mod-item-card">
+        <div style="display:flex;align-items:center;gap:8px;margin-bottom:6px">
           <div class="q-av" style="width:32px;height:32px">${(u.displayName||'?')[0].toUpperCase()}</div>
-          <div>
-            <div style="font-weight:700;font-size:.88rem">${esc(u.displayName||'—')} ${u.isMod?'<span class="mod-badge">MOD</span>':''} ${u.banned?'<span class="banned-badge">BANNED</span>':''}</div>
-            <div class="mi-meta">${esc(u.email||'—')}</div>
+          <div style="flex:1;min-width:0">
+            <div style="font-weight:700;font-size:.87rem;display:flex;align-items:center;gap:5px;flex-wrap:wrap">
+              ${esc(u.displayName||'—')}
+              ${isOwnerUser?'<span class="mod-badge t4">👑 Owner</span>':tierBadgeHtml(uTier)}
+              ${u.banned?'<span class="banned-badge">BANNED</span>':''}
+              ${isSelf?'<span style="font-size:.65rem;color:var(--text3)">(you)</span>':''}
+            </div>
+            <div class="mi-meta">${esc(u.email||uid)}</div>
           </div>
         </div>
-        <div class="mi-actions">
-          ${!u.isMod?`<button class="btn btn-mod" style="font-size:.72rem;padding:5px 9px" onclick="makeUserMod('${uid}','${esc(u.displayName||'')}')">🛡 Make Mod</button>`:''}
-          ${!u.banned?`<button class="btn btn-danger" style="font-size:.72rem;padding:5px 9px" onclick="modBanUser('${uid}','${esc(u.displayName||'')}')">🚫 Ban</button>`:''}
-          ${u.banned?`<button class="btn" style="font-size:.72rem;padding:5px 9px;border:1px solid var(--border)" onclick="unbanUser('${uid}','${esc(u.displayName||'')}')">✅ Unban</button>`:''}
-        </div>
+        ${!isOwnerUser&&!isSelf&&maxAssignable>0?`
+        <div class="mi-actions" style="flex-wrap:wrap;gap:6px">
+          <div style="display:flex;align-items:center;gap:6px">
+            <span style="font-size:.72rem;color:var(--text3);">Set tier:</span>
+            <select class="tier-select" id="tierSel-${uid}" onchange="setUserTier('${uid}','${esc(u.displayName||'')}',this.value)">
+              ${tierOptions}
+            </select>
+          </div>
+          ${can.banUsers()&&!u.banned?`<button class="btn btn-danger" style="font-size:.71rem;padding:4px 9px" onclick="modBanUser('${uid}','${esc(u.displayName||'')}',${uTier})">🚫 Ban</button>`:''}
+          ${can.banUsers()&&u.banned?`<button class="btn" style="font-size:.71rem;padding:4px 9px;border:1px solid var(--border)" onclick="unbanUser('${uid}','${esc(u.displayName||'')}')">✅ Unban</button>`:''}
+        </div>`:`<div class="mi-actions"><span style="font-size:.72rem;color:var(--text3)">${isOwnerUser?'Owner – cannot be modified':isSelf?'Cannot modify yourself':'T3+ to manage users'}</span></div>`}
       </div>`;
     }).join('');
   }catch(e){el.innerHTML=`<div class="empty"><p>${e.message}</p></div>`;}
 }
-async function makeUserMod(uid,name){
-  if(!isMod)return;
-  if(!confirm(`Make ${name} a moderator?`))return;
-  try{await setDoc(doc(db,'users',uid),{isMod:true},{merge:true});toast(`${name} is now a moderator.`,'success');renderModUsers();}
-  catch(e){toast('Error: '+e.message,'error');}
+
+async function setUserTier(uid,name,newTier){
+  newTier=parseInt(newTier);
+  if(uid===OWNER_UID){toast('Cannot change the Owner\'s tier.','error');return;}
+  if(uid===CU?.uid){toast('Cannot change your own tier.','error');return;}
+  // validate caller can assign this tier
+  const maxAssignable=modLevel===4?3:modLevel===3?2:0;
+  if(newTier>maxAssignable){toast(`Your tier can only assign up to ${tierLabel(maxAssignable)}.`,'error');return;}
+  try{
+    await setDoc(doc(db,'users',uid),{modLevel:newTier},{merge:true});
+    toast(`${name} is now ${newTier===0?'a regular member':tierLabel(newTier)}.`,'success');
+  }catch(e){toast('Error: '+e.message,'error');}
 }
+
 async function unbanUser(uid,name){
-  if(!isMod)return;
+  if(!can.banUsers()){toast('T3+ required.','error');return;}
   try{await setDoc(doc(db,'users',uid),{banned:false},{merge:true});toast(`${name} unbanned.`,'success');renderModUsers();}
   catch(e){toast('Error: '+e.message,'error');}
 }
