@@ -2,824 +2,323 @@
 <html lang="en" data-theme="light">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
-<title>GraceQ — Christian Questions & Community</title>
-<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,500;0,700;1,500&family=EB+Garamond:ital,wght@0,400;0,500;1,400&family=Nunito:wght@400;600;700&display=swap" rel="stylesheet">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>GraceQ — Christian Community</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,500;0,700;1,500&family=EB+Garamond:ital,wght@0,400;0,500;1,400&family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet">
 <style>
 :root {
-  --bg: #faf7f2;
-  --bg2: #f2ede3;
-  --surface: #ffffff;
-  --surface2: #f7f3ec;
-  --border: #ddd5c0;
-  --border2: #e8e0cc;
-  --text: #1e1610;
-  --text2: #5a4a35;
-  --text3: #9a8870;
-  --navy: #1a2744;
-  --navy2: #243460;
-  --gold: #c9972a;
-  --gold2: #e8b84b;
-  --cream: #fdf8ef;
-  --red: #8b1a1a;
-  --red2: #a52020;
-  --shadow: rgba(30,22,16,0.13);
-  --shadow2: rgba(30,22,16,0.06);
-  --success: #2d7a4f;
-  --danger: #c0392b;
-  --tag-bg: #eee6d4;
-  --tag-text: #5a3a1a;
-  --header-h: 56px;
-  --bottom-h: 62px;
+  --bg:#faf7f2;--bg2:#f2ede3;--surface:#ffffff;--surface2:#f7f3ec;
+  --border:#ddd5c0;--border2:#e8e0cc;
+  --text:#1e1610;--text2:#5a4a35;--text3:#9a8870;
+  --navy:#1a2744;--navy2:#243460;--navyL:#2e4080;
+  --gold:#c9972a;--gold2:#e8b84b;
+  --red:#8b1a1a;--red2:#a52020;
+  --shadow:rgba(30,22,16,0.13);--shadow2:rgba(30,22,16,0.06);
+  --success:#2d7a4f;--danger:#c0392b;
+  --tag-bg:#eee6d4;--tag-text:#5a3a1a;
+  --header-h:56px;--bottom-h:62px;
+  --mod:#7b2d8b;--mod2:#9c3daf;
 }
-[data-theme="dark"] {
-  --bg: #0d0f18;
-  --bg2: #141720;
-  --surface: #1a1e2e;
-  --surface2: #222740;
-  --border: #2e3450;
-  --border2: #353c5a;
-  --text: #e8e0d0;
-  --text2: #b0a488;
-  --text3: #706050;
-  --navy: #2a3a6a;
-  --navy2: #3a4e8a;
-  --gold: #e8b84b;
-  --gold2: #f5d070;
-  --cream: #1a1e2e;
-  --red: #c04040;
-  --red2: #d05050;
-  --shadow: rgba(0,0,0,0.4);
-  --shadow2: rgba(0,0,0,0.2);
-  --tag-bg: #222740;
-  --tag-text: #b0a488;
+[data-theme="dark"]{
+  --bg:#0d0f18;--bg2:#141720;--surface:#1a1e2e;--surface2:#222740;
+  --border:#2e3450;--border2:#353c5a;
+  --text:#e8e0d0;--text2:#b0a488;--text3:#706050;
+  --navy:#2a3a6a;--navy2:#3a4e8a;--navyL:#4a60a0;
+  --gold:#e8b84b;--gold2:#f5d070;
+  --red:#c04040;--red2:#d05050;
+  --shadow:rgba(0,0,0,.4);--shadow2:rgba(0,0,0,.2);
+  --tag-bg:#222740;--tag-text:#b0a488;
+  --mod:#9c3daf;--mod2:#b84fd4;
 }
-* { margin:0; padding:0; box-sizing:border-box; -webkit-tap-highlight-color:transparent; }
-html { scroll-behavior: smooth; }
-body {
-  font-family: 'Nunito', sans-serif;
-  background: var(--bg);
-  color: var(--text);
-  min-height: 100vh;
-  padding-top: var(--header-h);
-  padding-bottom: var(--bottom-h);
-  transition: background .3s, color .3s;
-}
-::-webkit-scrollbar { width: 4px; }
-::-webkit-scrollbar-thumb { background: var(--border); border-radius: 2px; }
-img { display: block; }
-a { color: var(--gold); text-decoration: none; }
+*{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent;}
+html{scroll-behavior:smooth;}
+body{font-family:'Nunito',sans-serif;background:var(--bg);color:var(--text);min-height:100vh;padding-top:var(--header-h);padding-bottom:var(--bottom-h);transition:background .3s,color .3s;overscroll-behavior:none;}
+::-webkit-scrollbar{width:4px;}::-webkit-scrollbar-thumb{background:var(--border);border-radius:2px;}
 
-/* ── HEADER ── */
-.app-header {
-  position: fixed; top: 0; left: 0; right: 0;
-  height: var(--header-h);
-  background: var(--navy);
-  z-index: 200;
-  display: flex; align-items: center;
-  padding: 0 16px;
-  gap: 10px;
-  box-shadow: 0 2px 16px rgba(0,0,0,0.35);
-}
-.app-header::after {
-  content: '';
-  position: absolute; bottom: 0; left: 0; right: 0;
-  height: 2px;
-  background: linear-gradient(90deg, transparent, var(--gold), var(--gold2), var(--gold), transparent);
-  opacity: 0.7;
-}
-.logo {
-  font-family: 'Playfair Display', serif;
-  font-size: 1.3rem;
-  font-weight: 700;
-  color: #fff;
-  letter-spacing: 0.01em;
-  flex-shrink: 0;
-}
-.logo em { color: var(--gold2); font-style: normal; }
-.cross-icon { color: var(--gold2); font-size: 1rem; flex-shrink: 0; }
-.header-right { margin-left: auto; display: flex; align-items: center; gap: 8px; }
-.icon-btn {
-  background: rgba(255,255,255,0.08);
-  border: none;
-  color: rgba(255,255,255,0.75);
-  width: 36px; height: 36px;
-  border-radius: 50%;
-  display: flex; align-items: center; justify-content: center;
-  cursor: pointer; font-size: 1rem;
-  transition: background .2s, color .2s;
-  flex-shrink: 0;
-}
-.icon-btn:active { background: rgba(255,255,255,0.18); }
-.user-avatar-btn {
-  width: 34px; height: 34px;
-  border-radius: 50%;
-  background: linear-gradient(135deg, var(--gold), var(--red));
-  border: 2px solid var(--gold2);
-  color: #fff;
-  font-family: 'Playfair Display', serif;
-  font-size: 0.9rem;
-  font-weight: 700;
-  display: flex; align-items: center; justify-content: center;
-  cursor: pointer;
-  flex-shrink: 0;
-}
+/* HEADER */
+.app-header{position:fixed;top:0;left:0;right:0;height:var(--header-h);background:var(--navy);z-index:200;display:flex;align-items:center;padding:0 14px;gap:10px;box-shadow:0 2px 16px rgba(0,0,0,.35);}
+.app-header::after{content:'';position:absolute;bottom:0;left:0;right:0;height:2px;background:linear-gradient(90deg,transparent,var(--gold),var(--gold2),var(--gold),transparent);opacity:.7;}
+.logo{font-family:'Playfair Display',serif;font-size:1.3rem;font-weight:700;color:#fff;flex-shrink:0;}
+.logo em{color:var(--gold2);font-style:normal;}
+.header-right{margin-left:auto;display:flex;align-items:center;gap:8px;}
+.icon-btn{background:rgba(255,255,255,.08);border:none;color:rgba(255,255,255,.8);width:36px;height:36px;border-radius:50%;display:flex;align-items:center;justify-content:center;cursor:pointer;font-size:1rem;transition:background .2s;flex-shrink:0;}
+.icon-btn:active{background:rgba(255,255,255,.2);}
+.user-av-btn{width:34px;height:34px;border-radius:50%;background:linear-gradient(135deg,var(--gold),var(--red));border:2px solid var(--gold2);color:#fff;font-family:'Playfair Display',serif;font-size:.9rem;font-weight:700;display:flex;align-items:center;justify-content:center;cursor:pointer;flex-shrink:0;}
 
-/* ── BOTTOM NAV ── */
-.bottom-nav {
-  position: fixed; bottom: 0; left: 0; right: 0;
-  height: var(--bottom-h);
-  background: var(--surface);
-  border-top: 1px solid var(--border);
-  display: flex;
-  z-index: 200;
-  box-shadow: 0 -4px 20px var(--shadow2);
-}
-.nav-item {
-  flex: 1;
-  display: flex; flex-direction: column; align-items: center; justify-content: center;
-  gap: 3px;
-  cursor: pointer;
-  color: var(--text3);
-  font-size: 0.65rem;
-  font-weight: 700;
-  letter-spacing: 0.04em;
-  text-transform: uppercase;
-  transition: color .2s;
-  border: none; background: none;
-  padding-bottom: env(safe-area-inset-bottom, 0);
-  position: relative;
-}
-.nav-item .nav-icon { font-size: 1.3rem; transition: transform .2s; }
-.nav-item.active { color: var(--navy); }
-[data-theme="dark"] .nav-item.active { color: var(--gold2); }
-.nav-item.active .nav-icon { transform: scale(1.15); }
-.nav-item.active::after {
-  content: '';
-  position: absolute; top: 0; left: 20%; right: 20%;
-  height: 2px;
-  background: var(--gold);
-  border-radius: 0 0 3px 3px;
-}
-.nav-badge {
-  position: absolute; top: 6px; right: calc(50% - 18px);
-  background: var(--red);
-  color: #fff;
-  font-size: 0.6rem;
-  font-weight: 700;
-  min-width: 16px; height: 16px;
-  border-radius: 8px;
-  display: flex; align-items: center; justify-content: center;
-  padding: 0 3px;
-  display: none;
-}
+/* BOTTOM NAV */
+.bottom-nav{position:fixed;bottom:0;left:0;right:0;height:var(--bottom-h);background:var(--surface);border-top:1px solid var(--border);display:flex;z-index:200;box-shadow:0 -4px 20px var(--shadow2);}
+.nav-item{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:3px;cursor:pointer;color:var(--text3);font-size:.6rem;font-weight:800;letter-spacing:.04em;text-transform:uppercase;border:none;background:none;padding-bottom:env(safe-area-inset-bottom,0);position:relative;transition:color .2s;}
+.nav-icon{font-size:1.25rem;transition:transform .2s;}
+.nav-item.active{color:var(--navy);}
+[data-theme="dark"] .nav-item.active{color:var(--gold2);}
+.nav-item.active .nav-icon{transform:scale(1.15);}
+.nav-item.active::after{content:'';position:absolute;top:0;left:20%;right:20%;height:2.5px;background:var(--gold);border-radius:0 0 3px 3px;}
+.nav-badge{position:absolute;top:5px;right:calc(50% - 20px);background:var(--danger);color:#fff;font-size:.58rem;font-weight:800;min-width:16px;height:16px;border-radius:8px;display:none;align-items:center;justify-content:center;padding:0 3px;}
+.nav-badge.show{display:flex;}
+.nav-item.mod-nav{color:var(--mod);}
+.nav-item.mod-nav.active{color:var(--mod2);}
 
-/* ── PAGES ── */
-.page { display: none; padding: 0 0 8px; }
-.page.active { display: block; }
+/* PAGES */
+.page{display:none;padding-bottom:8px;min-height:calc(100vh - var(--header-h) - var(--bottom-h));}
+.page.active{display:block;}
 
-/* ── VERSE BANNER ── */
-.verse-banner {
-  background: linear-gradient(135deg, var(--navy) 0%, var(--navy2) 100%);
-  margin: 12px 14px;
-  border-radius: 14px;
-  padding: 16px 18px;
-  position: relative;
-  overflow: hidden;
-  box-shadow: 0 4px 16px rgba(26,39,68,0.3);
-}
-.verse-banner::before {
-  content: '';
-  position: absolute;
-  right: -8px; top: -14px;
-  font-size: 6rem;
-  color: rgba(255,255,255,0.04);
-  line-height: 1;
-  pointer-events: none;
-}
-.verse-label {
-  font-size: 0.62rem;
-  letter-spacing: 0.14em;
-  text-transform: uppercase;
-  color: var(--gold2);
-  font-weight: 700;
-  display: block;
-  margin-bottom: 6px;
-}
-.verse-text {
-  font-family: 'Playfair Display', serif;
-  font-style: italic;
-  font-size: 1rem;
-  color: rgba(255,255,255,0.92);
-  line-height: 1.55;
-  margin-bottom: 6px;
-}
-.verse-ref {
-  font-size: 0.75rem;
-  color: var(--gold2);
-  font-weight: 600;
-}
+/* VERSE BANNER */
+.verse-banner{background:linear-gradient(135deg,var(--navy) 0%,var(--navy2) 100%);margin:12px 14px;border-radius:14px;padding:16px 18px;position:relative;overflow:hidden;box-shadow:0 4px 16px rgba(26,39,68,.3);}
+.verse-banner::before{content:'✝';position:absolute;right:-8px;top:-14px;font-size:6rem;color:rgba(255,255,255,.04);pointer-events:none;}
+.verse-label{font-size:.62rem;letter-spacing:.14em;text-transform:uppercase;color:var(--gold2);font-weight:800;display:block;margin-bottom:6px;}
+.verse-text{font-family:'Playfair Display',serif;font-style:italic;font-size:.98rem;color:rgba(255,255,255,.92);line-height:1.55;margin-bottom:6px;}
+.verse-ref{font-size:.75rem;color:var(--gold2);font-weight:700;}
 
-/* ── SECTION HEADER ── */
-.section-header {
-  display: flex; align-items: center; justify-content: space-between;
-  padding: 8px 14px 10px;
-}
-.section-title {
-  font-family: 'Playfair Display', serif;
-  font-size: 1.05rem;
-  color: var(--navy);
-}
-[data-theme="dark"] .section-title { color: var(--gold2); }
-.section-subtitle { font-size: 0.78rem; color: var(--text3); margin-top: 1px; }
+/* SHARED SECTION HEADER */
+.sec-head{display:flex;align-items:center;justify-content:space-between;padding:8px 14px 10px;}
+.sec-title{font-family:'Playfair Display',serif;font-size:1.05rem;color:var(--navy);}
+[data-theme="dark"] .sec-title{color:var(--gold2);}
+.sec-sub{font-size:.76rem;color:var(--text3);margin-top:1px;}
 
-/* ── SEARCH BAR ── */
-.search-wrap {
-  padding: 0 14px 10px;
-}
-.search-bar {
-  display: flex; align-items: center;
-  background: var(--surface);
-  border: 1.5px solid var(--border);
-  border-radius: 12px;
-  padding: 0 14px;
-  gap: 8px;
-  transition: border-color .2s, box-shadow .2s;
-}
-.search-bar:focus-within { border-color: var(--gold); box-shadow: 0 0 0 3px rgba(201,151,42,0.1); }
-.search-bar .si { color: var(--text3); font-size: 0.95rem; flex-shrink: 0; }
-.search-bar input {
-  flex: 1;
-  background: none; border: none; outline: none;
-  font-family: 'Nunito', sans-serif;
-  font-size: 0.9rem;
-  color: var(--text);
-  padding: 11px 0;
-}
-.search-bar input::placeholder { color: var(--text3); }
+/* SEARCH */
+.search-wrap{padding:0 14px 10px;}
+.search-bar{display:flex;align-items:center;background:var(--surface);border:1.5px solid var(--border);border-radius:12px;padding:0 13px;gap:8px;transition:border-color .2s,box-shadow .2s;}
+.search-bar:focus-within{border-color:var(--gold);box-shadow:0 0 0 3px rgba(201,151,42,.1);}
+.search-bar input{flex:1;background:none;border:none;outline:none;font-family:'Nunito',sans-serif;font-size:.9rem;color:var(--text);padding:11px 0;}
+.search-bar input::placeholder{color:var(--text3);}
 
-/* ── TOPIC CHIPS ── */
-.topic-scroll {
-  padding: 0 14px 12px;
-  display: flex; gap: 7px;
-  overflow-x: auto;
-  scrollbar-width: none;
-  -webkit-overflow-scrolling: touch;
-}
-.topic-scroll::-webkit-scrollbar { display: none; }
-.chip {
-  white-space: nowrap;
-  padding: 6px 14px;
-  border-radius: 20px;
-  font-size: 0.78rem;
-  font-weight: 700;
-  cursor: pointer;
-  border: 1.5px solid var(--border);
-  background: var(--surface);
-  color: var(--text2);
-  transition: all .2s;
-  flex-shrink: 0;
-}
-.chip.active, .chip:active {
-  background: var(--navy);
-  border-color: var(--navy);
-  color: #fff;
-}
-[data-theme="dark"] .chip.active { background: var(--gold); border-color: var(--gold); color: var(--navy); }
+/* CHIPS / PILLS */
+.chip-scroll{padding:0 14px 12px;display:flex;gap:7px;overflow-x:auto;scrollbar-width:none;-webkit-overflow-scrolling:touch;}
+.chip-scroll::-webkit-scrollbar{display:none;}
+.chip{white-space:nowrap;padding:6px 13px;border-radius:20px;font-size:.77rem;font-weight:700;cursor:pointer;border:1.5px solid var(--border);background:var(--surface);color:var(--text2);transition:all .2s;flex-shrink:0;}
+.chip.active{background:var(--navy);border-color:var(--navy);color:#fff;}
+[data-theme="dark"] .chip.active{background:var(--gold);border-color:var(--gold);color:var(--navy);}
+.sort-row{display:flex;gap:7px;padding:0 14px 12px;overflow-x:auto;scrollbar-width:none;}
+.sort-row::-webkit-scrollbar{display:none;}
+.sort-pill{white-space:nowrap;padding:6px 12px;border-radius:20px;font-size:.74rem;font-weight:700;cursor:pointer;border:1.5px solid var(--border2);background:transparent;color:var(--text3);font-family:'Nunito',sans-serif;transition:all .2s;flex-shrink:0;}
+.sort-pill.active{border-color:var(--gold);color:var(--gold);background:rgba(201,151,42,.08);}
 
-/* ── SORT ROW ── */
-.sort-row {
-  display: flex; gap: 7px;
-  padding: 0 14px 12px;
-  overflow-x: auto;
-  scrollbar-width: none;
-}
-.sort-row::-webkit-scrollbar { display: none; }
-.sort-pill {
-  display: flex; align-items: center; gap: 5px;
-  white-space: nowrap;
-  padding: 6px 13px;
-  border-radius: 20px;
-  font-size: 0.75rem;
-  font-weight: 700;
-  cursor: pointer;
-  border: 1.5px solid var(--border2);
-  background: transparent;
-  color: var(--text3);
-  font-family: 'Nunito', sans-serif;
-  transition: all .2s;
-  flex-shrink: 0;
-}
-.sort-pill.active { border-color: var(--gold); color: var(--gold); background: rgba(201,151,42,0.08); }
+/* QUESTION CARDS */
+.feed-list{padding:0 14px;display:flex;flex-direction:column;gap:12px;}
+.q-card{background:var(--surface);border:1px solid var(--border2);border-radius:14px;padding:14px;box-shadow:0 2px 8px var(--shadow2);position:relative;overflow:hidden;transition:box-shadow .2s;}
+.q-card::before{content:'';position:absolute;left:0;top:0;bottom:0;width:3px;background:linear-gradient(180deg,var(--gold),var(--red));border-radius:14px 0 0 14px;opacity:0;transition:opacity .2s;}
+.q-card:active{box-shadow:0 4px 18px var(--shadow);}
+.q-card:active::before{opacity:1;}
+.q-meta{display:flex;align-items:center;gap:7px;margin-bottom:8px;flex-wrap:wrap;}
+.q-av{width:28px;height:28px;border-radius:50%;background:linear-gradient(135deg,var(--navy),var(--navy2));display:flex;align-items:center;justify-content:center;color:#fff;font-family:'Playfair Display',serif;font-size:.75rem;font-weight:700;flex-shrink:0;}
+.q-av.anon{background:linear-gradient(135deg,#666,#999);}
+.q-name{font-size:.8rem;font-weight:700;color:var(--text);}
+.anon-pill{font-size:.6rem;font-weight:800;background:var(--tag-bg);color:var(--tag-text);padding:2px 6px;border-radius:4px;border:1px solid var(--border);letter-spacing:.04em;}
+.topic-badge{font-size:.67rem;font-weight:800;background:var(--navy);color:#fff;padding:2px 7px;border-radius:4px;letter-spacing:.03em;}
+[data-theme="dark"] .topic-badge{background:var(--navy2);}
+.q-time{font-size:.7rem;color:var(--text3);margin-left:auto;}
+.q-title{font-family:'Playfair Display',serif;font-size:.98rem;color:var(--text);line-height:1.4;margin-bottom:5px;}
+.q-body{font-size:.83rem;color:var(--text2);line-height:1.55;margin-bottom:10px;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;}
+.q-footer{display:flex;align-items:center;gap:7px;flex-wrap:wrap;}
+.q-stat{display:flex;align-items:center;gap:3px;font-size:.76rem;color:var(--text3);font-weight:600;}
+.q-stat .num{color:var(--navy);font-weight:800;}
+[data-theme="dark"] .q-stat .num{color:var(--gold2);}
+.q-actions{margin-left:auto;display:flex;gap:6px;}
+.q-btn{font-family:'Nunito',sans-serif;font-size:.73rem;font-weight:700;padding:5px 10px;border-radius:8px;border:1.5px solid var(--border);background:transparent;color:var(--text2);cursor:pointer;transition:all .15s;}
+.q-btn.primary{background:var(--navy);border-color:var(--navy);color:#fff;}
+[data-theme="dark"] .q-btn.primary{background:var(--gold);border-color:var(--gold);color:var(--navy);}
+.q-btn:active{opacity:.75;}
+.report-tiny{font-size:.68rem;color:var(--text3);background:none;border:none;font-family:'Nunito',sans-serif;cursor:pointer;padding:4px 5px;border-radius:5px;}
+.report-tiny:active{background:rgba(192,57,43,.1);color:var(--danger);}
 
-/* ── QUESTION CARD ── */
-.feed-list { padding: 0 14px; display: flex; flex-direction: column; gap: 12px; }
-.q-card {
-  background: var(--surface);
-  border: 1px solid var(--border2);
-  border-radius: 14px;
-  padding: 15px;
-  box-shadow: 0 2px 8px var(--shadow2);
-  transition: box-shadow .2s, border-color .2s;
-  cursor: pointer;
-  position: relative;
-  overflow: hidden;
-}
-.q-card::before {
-  content: '';
-  position: absolute; left: 0; top: 0; bottom: 0;
-  width: 3px;
-  background: linear-gradient(180deg, var(--gold), var(--red));
-  border-radius: 14px 0 0 14px;
-  opacity: 0;
-  transition: opacity .2s;
-}
-.q-card:active { box-shadow: 0 4px 18px var(--shadow); border-color: var(--gold); }
-.q-card:active::before { opacity: 1; }
-.q-meta {
-  display: flex; align-items: center; gap: 8px;
-  margin-bottom: 9px; flex-wrap: wrap;
-}
-.q-avatar {
-  width: 30px; height: 30px; border-radius: 50%;
-  background: linear-gradient(135deg, var(--navy), var(--navy2));
-  display: flex; align-items: center; justify-content: center;
-  color: #fff; font-family: 'Playfair Display', serif;
-  font-size: 0.78rem; font-weight: 700; flex-shrink: 0;
-}
-.q-avatar.anon { background: linear-gradient(135deg, #666, #999); }
-.q-name { font-size: 0.82rem; font-weight: 700; color: var(--text); }
-.anon-pill {
-  font-size: 0.62rem; font-weight: 700;
-  background: var(--tag-bg); color: var(--tag-text);
-  padding: 2px 6px; border-radius: 4px;
-  border: 1px solid var(--border);
-  letter-spacing: 0.04em;
-}
-.q-topic-badge {
-  font-size: 0.68rem; font-weight: 700;
-  background: var(--navy); color: #fff;
-  padding: 2px 8px; border-radius: 4px;
-  letter-spacing: 0.03em;
-}
-[data-theme="dark"] .q-topic-badge { background: var(--navy2); }
-.q-time { font-size: 0.72rem; color: var(--text3); margin-left: auto; }
-.q-title {
-  font-family: 'Playfair Display', serif;
-  font-size: 1rem;
-  color: var(--text);
-  line-height: 1.4;
-  margin-bottom: 6px;
-}
-.q-body {
-  font-size: 0.85rem;
-  color: var(--text2);
-  line-height: 1.55;
-  margin-bottom: 11px;
-  display: -webkit-box;
-  -webkit-line-clamp: 2;
-  -webkit-box-orient: vertical;
-  overflow: hidden;
-}
-.q-footer { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
-.q-stat {
-  display: flex; align-items: center; gap: 4px;
-  font-size: 0.78rem; color: var(--text3);
-  font-weight: 600;
-}
-.q-stat .num { color: var(--navy); font-weight: 700; }
-[data-theme="dark"] .q-stat .num { color: var(--gold2); }
-.q-actions { margin-left: auto; display: flex; gap: 7px; }
-.q-btn {
-  font-family: 'Nunito', sans-serif;
-  font-size: 0.75rem; font-weight: 700;
-  padding: 5px 11px; border-radius: 8px;
-  border: 1.5px solid var(--border);
-  background: transparent; color: var(--text2);
-  cursor: pointer; transition: all .15s;
-}
-.q-btn.primary { background: var(--navy); border-color: var(--navy); color: #fff; }
-[data-theme="dark"] .q-btn.primary { background: var(--gold); border-color: var(--gold); color: var(--navy); }
-.q-btn:active { opacity: 0.75; }
-.report-tiny {
-  font-size: 0.7rem; color: var(--text3);
-  background: none; border: none;
-  font-family: 'Nunito', sans-serif;
-  cursor: pointer; padding: 4px 6px; border-radius: 5px;
-}
-.report-tiny:active { background: rgba(192,57,43,0.1); color: var(--danger); }
+/* FORM ELEMENTS */
+.field-label{font-size:.73rem;font-weight:800;letter-spacing:.05em;text-transform:uppercase;color:var(--text3);display:block;margin-bottom:5px;}
+.field-input{width:100%;background:var(--bg);border:1.5px solid var(--border);color:var(--text);padding:11px 13px;border-radius:10px;font-family:'Nunito',sans-serif;font-size:.92rem;outline:none;transition:border-color .2s,box-shadow .2s;-webkit-appearance:none;appearance:none;}
+.field-input:focus{border-color:var(--gold);box-shadow:0 0 0 3px rgba(201,151,42,.12);}
+.field-input::placeholder{color:var(--text3);}
+textarea.field-input{resize:none;min-height:80px;}
+select.field-input{cursor:pointer;}
+.form-group{margin-bottom:12px;}
 
-/* ── LIVE DOT ── */
-.live-dot { width:6px;height:6px;background:var(--success);border-radius:50%;display:inline-block;animation:pulse 2s infinite; }
-@keyframes pulse { 0%,100%{opacity:1;transform:scale(1);}50%{opacity:.4;transform:scale(.7);} }
+/* BUTTONS */
+.btn{font-family:'Nunito',sans-serif;cursor:pointer;border:none;border-radius:9px;font-size:.88rem;font-weight:700;padding:9px 16px;transition:all .2s;}
+.btn-primary{background:var(--navy);color:#fff;}
+[data-theme="dark"] .btn-primary{background:var(--gold);color:var(--navy);}
+.btn-ghost{background:transparent;color:var(--text2);}
+.btn-danger{background:var(--danger);color:#fff;}
+.btn-mod{background:var(--mod);color:#fff;}
+.submit-btn{width:100%;padding:14px;background:linear-gradient(135deg,var(--navy),var(--navy2));color:#fff;border:none;border-radius:12px;font-family:'Nunito',sans-serif;font-size:1rem;font-weight:800;cursor:pointer;letter-spacing:.02em;transition:opacity .2s,transform .15s;box-shadow:0 4px 14px rgba(26,39,68,.35);}
+.submit-btn:active{transform:scale(.98);opacity:.9;}
+.submit-btn:disabled{opacity:.5;}
+.link-btn{background:none;border:none;color:var(--gold);font-family:'Nunito',sans-serif;font-size:.85rem;font-weight:700;cursor:pointer;padding:0;text-decoration:underline;}
 
-/* ── SKELETON ── */
-.skel {
-  background: linear-gradient(90deg, var(--surface2) 25%, var(--bg2) 50%, var(--surface2) 75%);
-  background-size: 200% 100%;
-  animation: shimmer 1.4s infinite;
-  border-radius: 14px; height: 110px; margin-bottom: 12px;
-}
-@keyframes shimmer { 0%{background-position:200% 0}100%{background-position:-200% 0} }
-.empty { text-align:center; padding:40px 20px; color:var(--text3); }
-.empty .ei { font-size:2.8rem; margin-bottom:10px; }
-.empty p { font-family:'EB Garamond',serif; font-style:italic; font-size:1rem; }
+/* ASK PAGE */
+.ask-page{padding:14px 14px 0;}
+.ask-card{background:var(--surface);border:1px solid var(--border);border-radius:16px;overflow:hidden;box-shadow:0 2px 12px var(--shadow2);}
+.ask-card-header{background:linear-gradient(135deg,var(--navy),var(--navy2));padding:16px 18px;display:flex;align-items:center;gap:10px;}
+.ask-card-header h2{font-family:'Playfair Display',serif;color:#fff;font-size:1.05rem;}
+.ask-body{padding:16px;display:flex;flex-direction:column;gap:12px;}
+.topic-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:7px;}
+.topic-opt{padding:9px 8px;border:1.5px solid var(--border);border-radius:10px;font-size:.77rem;font-weight:700;color:var(--text2);background:var(--bg);cursor:pointer;text-align:center;transition:all .2s;}
+.topic-opt.selected{background:var(--navy);border-color:var(--navy);color:#fff;}
+[data-theme="dark"] .topic-opt.selected{background:var(--gold);border-color:var(--gold);color:var(--navy);}
+.anon-toggle{display:flex;align-items:center;justify-content:space-between;padding:12px 14px;background:var(--bg2);border-radius:10px;cursor:pointer;}
+.toggle-sw{width:42px;height:24px;background:var(--border);border-radius:12px;position:relative;transition:background .2s;flex-shrink:0;}
+.toggle-sw.on{background:var(--navy);}
+[data-theme="dark"] .toggle-sw.on{background:var(--gold);}
+.toggle-sw::after{content:'';position:absolute;top:3px;left:3px;width:18px;height:18px;background:#fff;border-radius:50%;transition:left .2s;box-shadow:0 1px 4px rgba(0,0,0,.2);}
+.toggle-sw.on::after{left:21px;}
+.sign-in-gate{text-align:center;padding:40px 20px;font-family:'EB Garamond',serif;font-style:italic;color:var(--text2);font-size:1rem;line-height:1.7;}
 
-/* ── ASK PAGE ── */
-.ask-page { padding: 14px 14px 0; }
-.ask-card {
-  background: var(--surface);
-  border: 1px solid var(--border);
-  border-radius: 16px;
-  overflow: hidden;
-  box-shadow: 0 2px 12px var(--shadow2);
-}
-.ask-card-header {
-  background: linear-gradient(135deg, var(--navy), var(--navy2));
-  padding: 16px 18px;
-  display: flex; align-items: center; gap: 10px;
-}
-.ask-card-header h2 {
-  font-family: 'Playfair Display', serif;
-  color: #fff; font-size: 1.05rem;
-}
-.ask-card-header .cross { color: var(--gold2); font-size: 1.1rem; }
-.ask-body { padding: 16px; display: flex; flex-direction: column; gap: 12px; }
-.field-label {
-  font-size: 0.75rem; font-weight: 700; letter-spacing: 0.05em;
-  text-transform: uppercase; color: var(--text3);
-  display: block; margin-bottom: 5px;
-}
-.field-input {
-  width: 100%;
-  background: var(--bg);
-  border: 1.5px solid var(--border);
-  color: var(--text);
-  padding: 11px 13px;
-  border-radius: 10px;
-  font-family: 'Nunito', sans-serif;
-  font-size: 0.92rem;
-  outline: none;
-  transition: border-color .2s, box-shadow .2s;
-  -webkit-appearance: none;
-}
-.field-input:focus { border-color: var(--gold); box-shadow: 0 0 0 3px rgba(201,151,42,0.12); }
-.field-input::placeholder { color: var(--text3); }
-textarea.field-input { resize: none; min-height: 90px; }
-select.field-input { cursor: pointer; }
-.topic-grid {
-  display: grid; grid-template-columns: repeat(2, 1fr); gap: 8px;
-}
-.topic-opt {
-  padding: 9px 10px;
-  border: 1.5px solid var(--border);
-  border-radius: 10px;
-  font-size: 0.8rem; font-weight: 700;
-  color: var(--text2);
-  background: var(--bg);
-  cursor: pointer; text-align: center;
-  transition: all .2s;
-}
-.topic-opt.selected {
-  background: var(--navy); border-color: var(--navy); color: #fff;
-}
-[data-theme="dark"] .topic-opt.selected { background: var(--gold); border-color: var(--gold); color: var(--navy); }
-.anon-toggle {
-  display: flex; align-items: center; justify-content: space-between;
-  padding: 12px 14px;
-  background: var(--bg2);
-  border-radius: 10px;
-  cursor: pointer;
-}
-.anon-toggle-label { font-size: 0.88rem; color: var(--text2); font-weight: 600; }
-.anon-toggle-sub { font-size: 0.75rem; color: var(--text3); margin-top: 1px; }
-.toggle-sw {
-  width: 42px; height: 24px;
-  background: var(--border);
-  border-radius: 12px; position: relative;
-  transition: background .2s;
-  flex-shrink: 0;
-}
-.toggle-sw.on { background: var(--navy); }
-[data-theme="dark"] .toggle-sw.on { background: var(--gold); }
-.toggle-sw::after {
-  content: '';
-  position: absolute; top: 3px; left: 3px;
-  width: 18px; height: 18px;
-  background: #fff;
-  border-radius: 50%;
-  transition: left .2s;
-  box-shadow: 0 1px 4px rgba(0,0,0,0.2);
-}
-.toggle-sw.on::after { left: 21px; }
-.submit-btn {
-  width: 100%;
-  padding: 14px;
-  background: linear-gradient(135deg, var(--navy), var(--navy2));
-  color: #fff;
-  border: none; border-radius: 12px;
-  font-family: 'Nunito', sans-serif;
-  font-size: 1rem; font-weight: 700;
-  cursor: pointer; letter-spacing: 0.03em;
-  transition: opacity .2s, transform .15s;
-  box-shadow: 0 4px 14px rgba(26,39,68,0.35);
-}
-.submit-btn:active { transform: scale(0.98); opacity: 0.9; }
-.submit-btn:disabled { opacity: 0.5; }
-.sign-in-gate {
-  text-align: center; padding: 40px 20px;
-  font-family: 'EB Garamond', serif;
-  font-style: italic;
-  color: var(--text2);
-  font-size: 1rem;
-  line-height: 1.7;
-}
+/* BIBLE PAGE */
+.bible-page{padding:0 14px 8px;}
+.bible-controls{display:flex;gap:8px;margin-bottom:12px;flex-wrap:wrap;}
+.bible-select{flex:1;min-width:120px;}
+.bible-chapter-nav{display:flex;align-items:center;gap:10px;margin-bottom:14px;padding:0 2px;}
+.bible-chapter-nav button{background:var(--surface);border:1.5px solid var(--border);color:var(--text2);width:36px;height:36px;border-radius:8px;font-size:1.1rem;cursor:pointer;display:flex;align-items:center;justify-content:center;flex-shrink:0;transition:all .2s;}
+.bible-chapter-nav button:active{background:var(--navy);border-color:var(--navy);color:#fff;}
+.bible-chapter-nav button:disabled{opacity:.3;cursor:default;}
+.chapter-label{flex:1;text-align:center;font-family:'Playfair Display',serif;font-size:1rem;color:var(--navy);}
+[data-theme="dark"] .chapter-label{color:var(--gold2);}
+.verse-list{background:var(--surface);border:1px solid var(--border2);border-radius:14px;padding:16px;max-height:calc(100vh - 280px);overflow-y:auto;-webkit-overflow-scrolling:touch;}
+.bible-verse{display:flex;gap:10px;margin-bottom:10px;line-height:1.65;}
+.bible-verse .vnum{font-family:'Playfair Display',serif;font-size:.78rem;color:var(--gold);font-weight:700;min-width:22px;padding-top:2px;flex-shrink:0;}
+.bible-verse .vtxt{font-family:'EB Garamond',serif;font-size:1.05rem;color:var(--text);line-height:1.7;}
+.bible-verse.highlighted{background:rgba(201,151,42,.12);border-radius:6px;padding:4px 6px;margin:-4px -6px 6px;}
+.bible-loading{text-align:center;padding:30px;color:var(--text3);font-family:'EB Garamond',serif;font-style:italic;}
 
-/* ── CHAT SHEET ── */
-.sheet-backdrop {
-  position: fixed; inset: 0;
-  background: rgba(0,0,0,0.5);
-  z-index: 300;
-  display: none;
-  backdrop-filter: blur(2px);
-  animation: fadeIn .2s;
-}
-.sheet-backdrop.open { display: block; }
-@keyframes fadeIn { from{opacity:0} to{opacity:1} }
-.chat-sheet {
-  position: fixed;
-  bottom: 0; left: 0; right: 0;
-  background: var(--surface);
-  border-radius: 20px 20px 0 0;
-  z-index: 400;
-  display: flex; flex-direction: column;
-  transform: translateY(100%);
-  transition: transform .3s cubic-bezier(.4,0,.2,1);
-  max-height: 88vh;
-  box-shadow: 0 -8px 32px rgba(0,0,0,0.25);
-}
-.chat-sheet.open { transform: translateY(0); }
-.sheet-handle {
-  width: 36px; height: 4px;
-  background: var(--border);
-  border-radius: 2px;
-  margin: 10px auto 0;
-  flex-shrink: 0;
-}
-.sheet-header {
-  padding: 12px 16px 12px;
-  border-bottom: 1px solid var(--border2);
-  flex-shrink: 0;
-}
-.sheet-q-title {
-  font-family: 'Playfair Display', serif;
-  font-size: 0.95rem;
-  color: var(--text);
-  line-height: 1.4;
-  margin-bottom: 6px;
-}
-.sheet-meta { display: flex; align-items: center; gap: 8px; }
-.sheet-msgs {
-  flex: 1;
-  overflow-y: auto;
-  padding: 14px 14px;
-  display: flex; flex-direction: column; gap: 10px;
-  -webkit-overflow-scrolling: touch;
-}
-.msg-bubble {
-  max-width: 82%; padding: 9px 13px;
-  border-radius: 14px; font-size: 0.88rem;
-  line-height: 1.5; position: relative;
-}
-.msg-bubble.mine {
-  background: var(--navy);
-  color: #fff;
-  align-self: flex-end;
-  border-radius: 14px 14px 3px 14px;
-}
-[data-theme="dark"] .msg-bubble.mine { background: var(--gold); color: var(--navy); }
-.msg-bubble.theirs {
-  background: var(--surface2);
-  border: 1px solid var(--border2);
-  color: var(--text);
-  align-self: flex-start;
-  border-radius: 14px 14px 14px 3px;
-}
-.msg-author { font-size: 0.67rem; font-weight: 700; opacity: 0.7; margin-bottom: 2px; }
-.msg-time { font-size: 0.62rem; opacity: 0.5; margin-top: 3px; text-align: right; }
-.msg-report { position:absolute;top:4px;right:5px;font-size:.6rem;opacity:0;background:none;border:none;color:var(--danger);cursor:pointer;padding:0; }
-.msg-bubble:hover .msg-report { opacity:.6; }
-.profanity-bar {
-  background: rgba(192,57,43,0.1); border-top:1px solid rgba(192,57,43,0.2);
-  color: var(--danger); font-size: .78rem; text-align: center;
-  padding: 6px; display: none; flex-shrink: 0;
-}
-.sheet-input-row {
-  display: flex; gap: 8px; align-items: flex-end;
-  padding: 10px 14px calc(10px + env(safe-area-inset-bottom, 0));
-  border-top: 1px solid var(--border2);
-  flex-shrink: 0;
-}
-.sheet-textarea {
-  flex: 1;
-  background: var(--bg);
-  border: 1.5px solid var(--border);
-  color: var(--text);
-  padding: 9px 12px;
-  border-radius: 12px;
-  font-family: 'Nunito', sans-serif;
-  font-size: 0.9rem;
-  outline: none; resize: none;
-  min-height: 40px; max-height: 100px;
-  transition: border-color .2s;
-  -webkit-appearance: none;
-}
-.sheet-textarea:focus { border-color: var(--gold); }
-.send-btn {
-  width: 40px; height: 40px;
-  background: var(--navy);
-  border: none; border-radius: 12px; color: #fff;
-  font-size: 1rem; cursor: pointer; flex-shrink: 0;
-  display: flex; align-items: center; justify-content: center;
-  transition: background .2s, transform .15s;
-}
-[data-theme="dark"] .send-btn { background: var(--gold); color: var(--navy); }
-.send-btn:active { transform: scale(0.92); }
+/* DM PAGE */
+.dm-page{padding:0 14px;}
+.dm-list{display:flex;flex-direction:column;gap:1px;background:var(--border2);border-radius:14px;overflow:hidden;border:1px solid var(--border2);}
+.dm-item{background:var(--surface);display:flex;align-items:center;gap:12px;padding:14px;cursor:pointer;transition:background .15s;}
+.dm-item:active{background:var(--surface2);}
+.dm-item .dm-av{width:42px;height:42px;border-radius:50%;background:linear-gradient(135deg,var(--navy),var(--gold));display:flex;align-items:center;justify-content:center;color:#fff;font-family:'Playfair Display',serif;font-size:1rem;font-weight:700;flex-shrink:0;}
+.dm-item .dm-name{font-weight:700;font-size:.92rem;color:var(--text);}
+.dm-item .dm-preview{font-size:.78rem;color:var(--text3);margin-top:1px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:180px;}
+.dm-item .dm-time{font-size:.7rem;color:var(--text3);margin-left:auto;flex-shrink:0;}
+.dm-unread-dot{width:8px;height:8px;background:var(--navy);border-radius:50%;flex-shrink:0;}
+[data-theme="dark"] .dm-unread-dot{background:var(--gold2);}
+.new-dm-btn{display:flex;align-items:center;gap:8px;background:var(--surface);border:1.5px dashed var(--border);border-radius:14px;padding:14px;cursor:pointer;color:var(--text3);font-size:.88rem;font-weight:700;margin-bottom:12px;transition:all .2s;}
+.new-dm-btn:active{border-color:var(--gold);color:var(--gold);}
 
-/* ── DM SHEET ── */
-.dm-sheet {
-  position: fixed;
-  bottom: 0; left: 0; right: 0;
-  background: var(--surface);
-  border-radius: 20px 20px 0 0;
-  z-index: 410;
-  display: flex; flex-direction: column;
-  transform: translateY(100%);
-  transition: transform .3s cubic-bezier(.4,0,.2,1);
-  max-height: 78vh;
-  box-shadow: 0 -8px 32px rgba(0,0,0,0.3);
-}
-.dm-sheet.open { transform: translateY(0); }
+/* MOD PAGE */
+.mod-page{padding:0 14px;}
+.mod-header{background:linear-gradient(135deg,var(--mod),var(--mod2));border-radius:14px;padding:16px 18px;margin-bottom:16px;color:#fff;}
+.mod-header h2{font-family:'Playfair Display',serif;font-size:1.15rem;}
+.mod-header p{font-size:.78rem;opacity:.8;margin-top:3px;}
+.mod-tabs{display:flex;gap:0;background:var(--surface);border:1px solid var(--border);border-radius:12px;overflow:hidden;margin-bottom:14px;}
+.mod-tab{flex:1;padding:10px;text-align:center;font-size:.78rem;font-weight:800;cursor:pointer;background:none;border:none;font-family:'Nunito',sans-serif;color:var(--text3);transition:all .2s;border-right:1px solid var(--border);}
+.mod-tab:last-child{border-right:none;}
+.mod-tab.active{background:var(--mod);color:#fff;}
+.mod-section{display:none;}
+.mod-section.active{display:block;}
+.report-card{background:var(--surface);border:1px solid var(--border2);border-radius:12px;padding:14px;margin-bottom:10px;box-shadow:0 1px 6px var(--shadow2);}
+.report-card .rc-type{font-size:.65rem;font-weight:800;letter-spacing:.08em;text-transform:uppercase;color:var(--mod);margin-bottom:4px;}
+.report-card .rc-reason{font-size:.85rem;font-weight:700;color:var(--text);}
+.report-card .rc-detail{font-size:.78rem;color:var(--text2);margin-top:2px;}
+.report-card .rc-meta{font-size:.7rem;color:var(--text3);margin-top:6px;}
+.report-card .rc-actions{display:flex;gap:7px;margin-top:10px;flex-wrap:wrap;}
+.mod-item-card{background:var(--surface);border:1px solid var(--border2);border-radius:12px;padding:13px;margin-bottom:10px;}
+.mod-item-card .mi-title{font-family:'Playfair Display',serif;font-size:.92rem;color:var(--text);margin-bottom:4px;}
+.mod-item-card .mi-meta{font-size:.73rem;color:var(--text3);}
+.mod-item-card .mi-body{font-size:.8rem;color:var(--text2);margin-top:5px;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;}
+.mod-item-card .mi-actions{display:flex;gap:7px;margin-top:10px;flex-wrap:wrap;}
+.mod-badge{background:var(--mod);color:#fff;font-size:.6rem;font-weight:800;padding:2px 7px;border-radius:4px;letter-spacing:.06em;text-transform:uppercase;}
+.banned-badge{background:var(--danger);color:#fff;font-size:.6rem;font-weight:800;padding:2px 7px;border-radius:4px;}
 
-/* ── PROFILE PAGE ── */
-.profile-page { padding: 16px 14px 0; }
-.profile-header-card {
-  background: linear-gradient(135deg, var(--navy) 0%, var(--navy2) 100%);
-  border-radius: 16px; padding: 22px 18px;
-  display: flex; align-items: center; gap: 15px;
-  margin-bottom: 16px;
-  position: relative; overflow: hidden;
-}
-.profile-header-card::before {
-  content: '✝'; position: absolute; right: 10px; top: -10px;
-  font-size: 5rem; color: rgba(255,255,255,0.04); pointer-events: none;
-}
-.profile-big-av {
-  width: 60px; height: 60px; border-radius: 50%;
-  background: linear-gradient(135deg, var(--gold), var(--red));
-  border: 3px solid var(--gold2);
-  display: flex; align-items: center; justify-content: center;
-  font-family: 'Playfair Display', serif; font-size: 1.5rem;
-  font-weight: 700; color: #fff; flex-shrink: 0;
-}
-.profile-name { font-family:'Playfair Display',serif; font-size:1.2rem; color:#fff; }
-.profile-email { font-size:.8rem; color:rgba(255,255,255,.6); margin-top:2px; }
-.profile-card {
-  background: var(--surface);
-  border: 1px solid var(--border);
-  border-radius: 14px;
-  overflow: hidden;
-  margin-bottom: 12px;
-  box-shadow: 0 2px 8px var(--shadow2);
-}
-.profile-row {
-  display: flex; align-items: center; gap: 12px;
-  padding: 15px 16px;
-  border-bottom: 1px solid var(--border2);
-  cursor: pointer;
-  transition: background .15s;
-}
-.profile-row:last-child { border-bottom: none; }
-.profile-row:active { background: var(--bg2); }
-.profile-row .row-icon { font-size: 1.1rem; flex-shrink: 0; width: 24px; text-align: center; }
-.profile-row .row-label { font-size: 0.9rem; font-weight: 600; color: var(--text); flex: 1; }
-.profile-row .row-sub { font-size: 0.75rem; color: var(--text3); }
-.profile-row .row-arrow { color: var(--text3); font-size: 0.8rem; }
-.signout-btn {
-  width: 100%; padding: 14px;
-  background: rgba(192,57,43,0.1);
-  border: 1.5px solid rgba(192,57,43,0.25);
-  color: var(--danger);
-  border-radius: 12px;
-  font-family: 'Nunito', sans-serif; font-size: 0.95rem; font-weight: 700;
-  cursor: pointer; transition: all .2s;
-  margin-top: 4px;
-}
-.signout-btn:active { background: var(--danger); color: #fff; }
+/* PROFILE PAGE */
+.profile-page{padding:14px 14px 0;}
+.profile-hero{background:linear-gradient(135deg,var(--navy),var(--navy2));border-radius:16px;padding:22px 18px;display:flex;align-items:center;gap:15px;margin-bottom:16px;position:relative;overflow:hidden;}
+.profile-hero::before{content:'✝';position:absolute;right:10px;top:-10px;font-size:5rem;color:rgba(255,255,255,.04);pointer-events:none;}
+.profile-big-av{width:58px;height:58px;border-radius:50%;background:linear-gradient(135deg,var(--gold),var(--red));border:3px solid var(--gold2);display:flex;align-items:center;justify-content:center;font-family:'Playfair Display',serif;font-size:1.4rem;font-weight:700;color:#fff;flex-shrink:0;}
+.profile-name{font-family:'Playfair Display',serif;font-size:1.15rem;color:#fff;}
+.profile-email{font-size:.78rem;color:rgba(255,255,255,.6);margin-top:2px;}
+.profile-card{background:var(--surface);border:1px solid var(--border);border-radius:14px;overflow:hidden;margin-bottom:12px;box-shadow:0 2px 8px var(--shadow2);}
+.profile-row{display:flex;align-items:center;gap:12px;padding:14px 16px;border-bottom:1px solid var(--border2);cursor:pointer;transition:background .15s;}
+.profile-row:last-child{border-bottom:none;}
+.profile-row:active{background:var(--bg2);}
+.profile-row .ri{font-size:1.1rem;flex-shrink:0;width:24px;text-align:center;}
+.profile-row .rl{font-size:.88rem;font-weight:700;color:var(--text);flex:1;}
+.profile-row .rs{font-size:.75rem;color:var(--text3);}
+.profile-row .ra{color:var(--text3);font-size:.8rem;}
+.signout-btn{width:100%;padding:14px;background:rgba(192,57,43,.1);border:1.5px solid rgba(192,57,43,.25);color:var(--danger);border-radius:12px;font-family:'Nunito',sans-serif;font-size:.95rem;font-weight:800;cursor:pointer;transition:all .2s;}
+.signout-btn:active{background:var(--danger);color:#fff;}
 
-/* ── AUTH PAGE ── */
-.auth-page { padding: 20px 14px 0; }
-.auth-card {
-  background: var(--surface);
-  border: 1px solid var(--border);
-  border-radius: 18px;
-  overflow: hidden;
-  box-shadow: 0 4px 20px var(--shadow);
-}
-.auth-top {
-  background: linear-gradient(135deg, var(--navy), var(--navy2));
-  padding: 28px 20px 22px;
-  text-align: center;
-}
-.auth-cross { font-size: 2rem; color: var(--gold2); margin-bottom: 8px; display: block; }
-.auth-title { font-family:'Playfair Display',serif; font-size:1.4rem; color:#fff; }
-.auth-sub { font-size:.82rem; color:rgba(255,255,255,.6); margin-top:4px; }
-.auth-tabs {
-  display: flex;
-  border-bottom: 1px solid var(--border);
-}
-.auth-tab {
-  flex: 1; text-align: center;
-  padding: 13px; font-size: 0.88rem; font-weight: 700;
-  color: var(--text3); cursor: pointer;
-  border-bottom: 2px solid transparent;
-  transition: all .2s; background: none; border-left: none; border-right: none; border-top: none;
-  font-family: 'Nunito', sans-serif;
-}
-.auth-tab.active { color: var(--navy); border-bottom-color: var(--gold); }
-[data-theme="dark"] .auth-tab.active { color: var(--gold2); }
-.auth-form { padding: 20px; display: flex; flex-direction: column; gap: 12px; }
-.auth-form .field-input { font-size: 1rem; }
-.error-box {
-  background: rgba(192,57,43,0.1); border:1px solid rgba(192,57,43,0.3);
-  color: var(--danger); padding: 10px 13px; border-radius: 9px;
-  font-size: .83rem; display: none;
-}
+/* AUTH PAGE */
+.auth-page{padding:18px 14px 0;}
+.auth-card{background:var(--surface);border:1px solid var(--border);border-radius:18px;overflow:hidden;box-shadow:0 4px 20px var(--shadow);}
+.auth-top{background:linear-gradient(135deg,var(--navy),var(--navy2));padding:26px 20px 22px;text-align:center;}
+.auth-cross{font-size:2rem;color:var(--gold2);margin-bottom:8px;display:block;}
+.auth-title{font-family:'Playfair Display',serif;font-size:1.35rem;color:#fff;}
+.auth-sub{font-size:.8rem;color:rgba(255,255,255,.6);margin-top:4px;}
+.auth-tabs{display:flex;border-bottom:1px solid var(--border);}
+.auth-tab{flex:1;text-align:center;padding:13px;font-size:.88rem;font-weight:800;color:var(--text3);cursor:pointer;border-bottom:2.5px solid transparent;transition:all .2s;background:none;border-left:none;border-right:none;border-top:none;font-family:'Nunito',sans-serif;}
+.auth-tab.active{color:var(--navy);border-bottom-color:var(--gold);}
+[data-theme="dark"] .auth-tab.active{color:var(--gold2);}
+.auth-form{padding:18px;display:flex;flex-direction:column;gap:11px;}
+.error-box{background:rgba(192,57,43,.1);border:1px solid rgba(192,57,43,.3);color:var(--danger);padding:10px 13px;border-radius:9px;font-size:.82rem;display:none;}
+.success-box{background:rgba(45,122,79,.1);border:1px solid rgba(45,122,79,.3);color:var(--success);padding:10px 13px;border-radius:9px;font-size:.82rem;display:none;}
+.verify-notice{background:rgba(201,151,42,.1);border:1px solid rgba(201,151,42,.3);color:var(--gold);padding:12px 14px;border-radius:10px;font-size:.84rem;font-weight:600;text-align:center;display:none;}
 
-/* ── MODAL ── */
-.modal-overlay {
-  position: fixed; inset: 0;
-  background: rgba(0,0,0,.6); z-index:600;
-  display: none; align-items: center; justify-content: center;
-  padding: 20px;
-  animation: fadeIn .2s;
-}
-.modal-overlay.open { display: flex; }
-.modal {
-  background: var(--surface); border:1px solid var(--border);
-  border-radius: 16px; padding: 22px;
-  width: 100%; max-width: 360px;
-  box-shadow: 0 16px 48px rgba(0,0,0,.4);
-  animation: popIn .25s ease;
-}
-@keyframes popIn { from{opacity:0;transform:scale(.92) translateY(8px)}to{opacity:1;transform:scale(1) translateY(0)} }
-.modal h3 { font-family:'Playfair Display',serif; font-size:1.05rem; color:var(--navy); margin-bottom:5px; }
-[data-theme="dark"] .modal h3 { color: var(--gold2); }
-.modal p { font-size:.84rem; color:var(--text2); margin-bottom:14px; }
-.modal-btns { display:flex; gap:9px; justify-content:flex-end; margin-top:16px; }
-.btn { font-family:'Nunito',sans-serif; cursor:pointer; border:none; border-radius:9px; font-size:.88rem; font-weight:700; padding:9px 16px; transition:all .2s; }
-.btn-primary { background:var(--navy); color:#fff; }
-[data-theme="dark"] .btn-primary { background:var(--gold); color:var(--navy); }
-.btn-ghost { background:transparent; color:var(--text2); }
-.btn-danger { background:var(--danger); color:#fff; }
+/* BOTTOM SHEETS */
+.sheet-backdrop{position:fixed;inset:0;background:rgba(0,0,0,.5);z-index:300;display:none;backdrop-filter:blur(2px);}
+.sheet-backdrop.open{display:block;}
+.bottom-sheet{position:fixed;bottom:0;left:0;right:0;background:var(--surface);border-radius:20px 20px 0 0;z-index:400;display:flex;flex-direction:column;transform:translateY(100%);transition:transform .3s cubic-bezier(.4,0,.2,1);max-height:90vh;box-shadow:0 -8px 32px rgba(0,0,0,.25);}
+.bottom-sheet.open{transform:translateY(0);}
+.sheet-handle{width:36px;height:4px;background:var(--border);border-radius:2px;margin:10px auto 0;flex-shrink:0;}
+.sheet-hd{padding:12px 16px 12px;border-bottom:1px solid var(--border2);flex-shrink:0;}
+.sheet-title{font-family:'Playfair Display',serif;font-size:.95rem;color:var(--text);line-height:1.4;margin-bottom:4px;}
+.sheet-msgs{flex:1;overflow-y:auto;padding:13px;display:flex;flex-direction:column;gap:9px;-webkit-overflow-scrolling:touch;}
+.msg{max-width:83%;padding:9px 12px;border-radius:14px;font-size:.86rem;line-height:1.5;position:relative;}
+.msg.mine{background:var(--navy);color:#fff;align-self:flex-end;border-radius:14px 14px 3px 14px;}
+[data-theme="dark"] .msg.mine{background:var(--gold);color:var(--navy);}
+.msg.theirs{background:var(--surface2);border:1px solid var(--border2);color:var(--text);align-self:flex-start;border-radius:14px 14px 14px 3px;}
+.msg-author{font-size:.66rem;font-weight:800;opacity:.7;margin-bottom:2px;}
+.msg-time{font-size:.61rem;opacity:.5;margin-top:3px;text-align:right;}
+.msg-report-btn{position:absolute;top:3px;right:4px;font-size:.58rem;opacity:0;background:none;border:none;color:var(--danger);cursor:pointer;padding:0;}
+.msg:hover .msg-report-btn{opacity:.6;}
+.prof-bar{background:rgba(192,57,43,.1);border-top:1px solid rgba(192,57,43,.2);color:var(--danger);font-size:.76rem;text-align:center;padding:6px;display:none;flex-shrink:0;}
+.sheet-input-row{display:flex;gap:8px;align-items:flex-end;padding:9px 13px calc(9px + env(safe-area-inset-bottom,0));border-top:1px solid var(--border2);flex-shrink:0;}
+.sheet-ta{flex:1;background:var(--bg);border:1.5px solid var(--border);color:var(--text);padding:8px 11px;border-radius:12px;font-family:'Nunito',sans-serif;font-size:.88rem;outline:none;resize:none;min-height:38px;max-height:100px;transition:border-color .2s;-webkit-appearance:none;}
+.sheet-ta:focus{border-color:var(--gold);}
+.send-btn{width:38px;height:38px;background:var(--navy);border:none;border-radius:11px;color:#fff;font-size:.95rem;cursor:pointer;flex-shrink:0;display:flex;align-items:center;justify-content:center;transition:background .2s,transform .15s;}
+[data-theme="dark"] .send-btn{background:var(--gold);color:var(--navy);}
+.send-btn:active{transform:scale(.92);}
 
-/* ── TOAST ── */
-.toasts {
-  position: fixed; top: calc(var(--header-h) + 8px); left: 14px; right: 14px;
-  z-index: 999; display: flex; flex-direction: column; gap: 7px;
-  pointer-events: none;
-}
-.toast {
-  background: var(--surface); border:1px solid var(--border);
-  border-left: 4px solid var(--navy);
-  padding: 11px 14px; border-radius: 10px;
-  font-size: .87rem; font-weight: 600;
-  box-shadow: 0 4px 16px var(--shadow);
-  animation: toastIn .25s ease;
-  color: var(--text);
-}
-.toast.s { border-left-color: var(--success); }
-.toast.e { border-left-color: var(--danger); }
-@keyframes toastIn { from{opacity:0;transform:translateY(-10px)}to{opacity:1;transform:translateY(0)} }
+/* MODAL */
+.modal-overlay{position:fixed;inset:0;background:rgba(0,0,0,.6);z-index:600;display:none;align-items:center;justify-content:center;padding:20px;}
+.modal-overlay.open{display:flex;}
+.modal{background:var(--surface);border:1px solid var(--border);border-radius:16px;padding:22px;width:100%;max-width:360px;box-shadow:0 16px 48px rgba(0,0,0,.4);animation:popIn .25s ease;}
+@keyframes popIn{from{opacity:0;transform:scale(.92) translateY(8px)}to{opacity:1;transform:scale(1) translateY(0)}}
+.modal h3{font-family:'Playfair Display',serif;font-size:1.05rem;color:var(--navy);margin-bottom:5px;}
+[data-theme="dark"] .modal h3{color:var(--gold2);}
+.modal p{font-size:.83rem;color:var(--text2);margin-bottom:14px;}
+.modal-btns{display:flex;gap:9px;justify-content:flex-end;margin-top:16px;}
 
-/* ── SPINNER ── */
-.spin { display:inline-block;width:16px;height:16px;border:2px solid rgba(255,255,255,.3);border-top-color:#fff;border-radius:50%;animation:sp .7s linear infinite; }
-@keyframes sp { to{transform:rotate(360deg)} }
+/* MISC */
+.live-dot{width:6px;height:6px;background:var(--success);border-radius:50%;display:inline-block;animation:pulse 2s infinite;}
+@keyframes pulse{0%,100%{opacity:1;transform:scale(1)}50%{opacity:.4;transform:scale(.7)}}
+.skel{background:linear-gradient(90deg,var(--surface2) 25%,var(--bg2) 50%,var(--surface2) 75%);background-size:200% 100%;animation:shimmer 1.4s infinite;border-radius:14px;height:110px;margin-bottom:12px;}
+@keyframes shimmer{0%{background-position:200% 0}100%{background-position:-200% 0}}
+.empty{text-align:center;padding:40px 20px;color:var(--text3);}
+.empty .ei{font-size:2.5rem;margin-bottom:8px;}
+.empty p{font-family:'EB Garamond',serif;font-style:italic;font-size:1rem;}
+.toasts{position:fixed;top:calc(var(--header-h) + 8px);left:14px;right:14px;z-index:999;display:flex;flex-direction:column;gap:6px;pointer-events:none;}
+.toast{background:var(--surface);border:1px solid var(--border);border-left:4px solid var(--navy);padding:10px 14px;border-radius:10px;font-size:.85rem;font-weight:700;box-shadow:0 4px 14px var(--shadow);animation:toastIn .25s ease;color:var(--text);}
+.toast.s{border-left-color:var(--success);}
+.toast.e{border-left-color:var(--danger);}
+@keyframes toastIn{from{opacity:0;transform:translateY(-10px)}to{opacity:1;transform:translateY(0)}}
+.spin{display:inline-block;width:15px;height:15px;border:2px solid rgba(255,255,255,.3);border-top-color:#fff;border-radius:50%;animation:sp .7s linear infinite;vertical-align:middle;}
+@keyframes sp{to{transform:rotate(360deg)}}
+.divider{text-align:center;position:relative;margin:4px 0;color:var(--text3);font-size:.78rem;}
+.divider::before,.divider::after{content:'';position:absolute;top:50%;width:38%;height:1px;background:var(--border);}
+.divider::before{left:0;}.divider::after{right:0;}
+.pill-badge{background:var(--navy);color:#fff;font-size:.62rem;font-weight:800;padding:2px 8px;border-radius:10px;vertical-align:middle;}
 </style>
 </head>
 <body>
 
 <!-- HEADER -->
 <header class="app-header">
-  <span class="cross-icon">✝</span>
+  <span style="color:var(--gold2);font-size:1rem;">✝</span>
   <div class="logo">Grace<em>Q</em></div>
   <div class="header-right">
-    <button class="icon-btn" onclick="toggleDark()" id="darkBtn" title="Toggle theme">🌙</button>
-    <div id="headerAuthArea"></div>
+    <button class="icon-btn" onclick="toggleDark()" id="darkBtn">🌙</button>
+    <div id="headerAuthEl"></div>
   </div>
 </header>
 
-<!-- BOTTOM NAV -->
+<!-- BOTTOM NAV (5 items: Feed, Ask, Bible, DMs, You) -->
 <nav class="bottom-nav">
   <button class="nav-item active" id="nav-feed" onclick="goPage('feed')">
     <span class="nav-icon">🏠</span>Feed
@@ -827,35 +326,39 @@ select.field-input { cursor: pointer; }
   <button class="nav-item" id="nav-ask" onclick="goPage('ask')">
     <span class="nav-icon">✍️</span>Ask
   </button>
-  <button class="nav-item" id="nav-profile" onclick="goPage('profile')">
-    <span class="nav-icon">👤</span>You
+  <button class="nav-item" id="nav-bible" onclick="goPage('bible')">
+    <span class="nav-icon">📖</span>Bible
+  </button>
+  <button class="nav-item" id="nav-dms" onclick="goPage('dms')">
+    <span class="nav-icon">✉️</span>DMs
     <span class="nav-badge" id="dmBadge">!</span>
   </button>
+  <button class="nav-item" id="nav-profile" onclick="goPage('profile')">
+    <span class="nav-icon">👤</span>You
+  </button>
+  <!-- MOD nav injected by JS if mod -->
 </nav>
 
 <!-- ── FEED PAGE ── -->
 <div class="page active" id="page-feed">
-  <div class="verse-banner" id="verseBanner">
+  <div class="verse-banner">
     <span class="verse-label">✦ Verse of the Day ✦</span>
     <p class="verse-text" id="verseText"></p>
     <span class="verse-ref" id="verseRef"></span>
   </div>
-
-  <div class="section-header">
+  <div class="sec-head">
     <div>
-      <div class="section-title">Community Questions <span class="live-dot" style="margin-left:5px"></span></div>
-      <div class="section-subtitle" id="qCountLabel">Loading…</div>
+      <div class="sec-title">Questions <span class="live-dot" style="margin-left:4px"></span></div>
+      <div class="sec-sub" id="qCountLbl">Loading…</div>
     </div>
   </div>
-
   <div class="search-wrap">
     <div class="search-bar">
-      <span class="si">🔍</span>
-      <input type="search" id="searchInput" placeholder="Search questions…" oninput="renderFeed()" autocomplete="off">
+      <span style="color:var(--text3)">🔍</span>
+      <input type="search" id="searchIn" placeholder="Search questions…" oninput="renderFeed()" autocomplete="off">
     </div>
   </div>
-
-  <div class="topic-scroll" id="topicChips">
+  <div class="chip-scroll" id="topicChips">
     <span class="chip active" onclick="filterTopic('',this)">✝ All</span>
     <span class="chip" onclick="filterTopic('Scripture',this)">📖 Scripture</span>
     <span class="chip" onclick="filterTopic('Prayer',this)">🙏 Prayer</span>
@@ -864,17 +367,15 @@ select.field-input { cursor: pointer; }
     <span class="chip" onclick="filterTopic('Holy Spirit',this)">🕊️ Holy Spirit</span>
     <span class="chip" onclick="filterTopic('Ethics',this)">⚖️ Ethics</span>
     <span class="chip" onclick="filterTopic('Worship',this)">🎵 Worship</span>
-    <span class="chip" onclick="filterTopic('Doubt & Faith',this)">💭 Doubt & Faith</span>
+    <span class="chip" onclick="filterTopic('Doubt & Faith',this)">💭 Doubt</span>
     <span class="chip" onclick="filterTopic('Bible Study',this)">📚 Bible Study</span>
-    <span class="chip" onclick="filterTopic('Church Life',this)">🏛️ Church Life</span>
+    <span class="chip" onclick="filterTopic('Church Life',this)">🏛️ Church</span>
   </div>
-
   <div class="sort-row">
     <button class="sort-pill active" onclick="setSort('newest',this)">🕐 Newest</button>
     <button class="sort-pill" onclick="setSort('most',this)">💬 Most Answers</button>
     <button class="sort-pill" onclick="setSort('least',this)">📋 Fewest Answers</button>
   </div>
-
   <div class="feed-list" id="feedList">
     <div class="skel"></div><div class="skel"></div><div class="skel"></div>
   </div>
@@ -884,45 +385,89 @@ select.field-input { cursor: pointer; }
 <div class="page" id="page-ask">
   <div class="ask-page">
     <div id="askGate" class="sign-in-gate" style="display:none">
-      ✝ Please <a href="#" onclick="goPage('profile')">sign in</a> to post a question to the community.
+      ✝ Please <a href="#" onclick="goPage('profile')">sign in</a> to post a question.
     </div>
-    <div class="ask-card" id="askCard">
-      <div class="ask-card-header">
-        <span class="cross">✝</span>
-        <h2>Ask the Community</h2>
+    <div id="askCardWrap">
+      <div class="ask-card">
+        <div class="ask-card-header"><span style="color:var(--gold2)">✝</span><h2>Ask the Community</h2></div>
+        <div class="ask-body">
+          <div class="form-group">
+            <label class="field-label">Your Question</label>
+            <input class="field-input" id="askTitle" placeholder="What's on your heart?" maxlength="140">
+          </div>
+          <div class="form-group">
+            <label class="field-label">Details</label>
+            <textarea class="field-input" id="askBody" placeholder="Share context, a verse, or background…" rows="4"></textarea>
+          </div>
+          <div class="form-group">
+            <label class="field-label">Topic</label>
+            <div class="topic-grid" id="topicGrid">
+              <div class="topic-opt selected" onclick="selTopic(this,'Scripture')">📖 Scripture</div>
+              <div class="topic-opt" onclick="selTopic(this,'Prayer')">🙏 Prayer</div>
+              <div class="topic-opt" onclick="selTopic(this,'Theology')">⛪ Theology</div>
+              <div class="topic-opt" onclick="selTopic(this,'Salvation')">✨ Salvation</div>
+              <div class="topic-opt" onclick="selTopic(this,'Holy Spirit')">🕊️ Holy Spirit</div>
+              <div class="topic-opt" onclick="selTopic(this,'Ethics')">⚖️ Ethics</div>
+              <div class="topic-opt" onclick="selTopic(this,'Worship')">🎵 Worship</div>
+              <div class="topic-opt" onclick="selTopic(this,'Doubt & Faith')">💭 Doubt & Faith</div>
+              <div class="topic-opt" onclick="selTopic(this,'Bible Study')">📚 Bible Study</div>
+              <div class="topic-opt" onclick="selTopic(this,'Church Life')">🏛️ Church Life</div>
+            </div>
+          </div>
+          <div class="anon-toggle" onclick="toggleAnon()">
+            <div>
+              <div style="font-size:.88rem;font-weight:700;color:var(--text2);">Post Anonymously</div>
+              <div style="font-size:.74rem;color:var(--text3);">Your name won't appear</div>
+            </div>
+            <div class="toggle-sw" id="anonSw"></div>
+          </div>
+          <button class="submit-btn" id="submitBtn" onclick="submitQuestion()">Post Question ✝</button>
+        </div>
       </div>
-      <div class="ask-body">
-        <div>
-          <label class="field-label">Your Question</label>
-          <input class="field-input" id="askTitle" placeholder="What's on your heart?" maxlength="140">
-        </div>
-        <div>
-          <label class="field-label">More Details</label>
-          <textarea class="field-input" id="askBody" placeholder="Share more context, a verse reference, or background…" rows="4"></textarea>
-        </div>
-        <div>
-          <label class="field-label">Topic</label>
-          <div class="topic-grid" id="topicGrid">
-            <div class="topic-opt selected" onclick="selectTopic(this,'Scripture')">📖 Scripture</div>
-            <div class="topic-opt" onclick="selectTopic(this,'Prayer')">🙏 Prayer</div>
-            <div class="topic-opt" onclick="selectTopic(this,'Theology')">⛪ Theology</div>
-            <div class="topic-opt" onclick="selectTopic(this,'Salvation')">✨ Salvation</div>
-            <div class="topic-opt" onclick="selectTopic(this,'Holy Spirit')">🕊️ Holy Spirit</div>
-            <div class="topic-opt" onclick="selectTopic(this,'Ethics')">⚖️ Ethics</div>
-            <div class="topic-opt" onclick="selectTopic(this,'Worship')">🎵 Worship</div>
-            <div class="topic-opt" onclick="selectTopic(this,'Doubt & Faith')">💭 Doubt & Faith</div>
-            <div class="topic-opt" onclick="selectTopic(this,'Bible Study')">📚 Bible Study</div>
-            <div class="topic-opt" onclick="selectTopic(this,'Church Life')">🏛️ Church Life</div>
-          </div>
-        </div>
-        <div class="anon-toggle" onclick="toggleAnon()">
-          <div>
-            <div class="anon-toggle-label">Post Anonymously</div>
-            <div class="anon-toggle-sub">Your name won't appear on this question</div>
-          </div>
-          <div class="toggle-sw" id="anonSw"></div>
-        </div>
-        <button class="submit-btn" id="submitBtn" onclick="submitQuestion()">Post Question ✝</button>
+    </div>
+  </div>
+</div>
+
+<!-- ── BIBLE PAGE ── -->
+<div class="page" id="page-bible">
+  <div style="padding:14px 14px 0">
+    <div class="sec-head" style="padding:0 0 12px">
+      <div>
+        <div class="sec-title">📖 Holy Bible</div>
+        <div class="sec-sub">King James Version</div>
+      </div>
+    </div>
+    <div class="bible-controls">
+      <select class="field-input bible-select" id="bibleBook" onchange="onBookChange()"></select>
+      <select class="field-input bible-select" id="bibleChap" onchange="loadChapter()" style="max-width:80px"></select>
+    </div>
+    <div class="bible-chapter-nav">
+      <button id="prevChapBtn" onclick="changeChap(-1)">‹</button>
+      <div class="chapter-label" id="chapLabel">Genesis 1</div>
+      <button id="nextChapBtn" onclick="changeChap(1)">›</button>
+    </div>
+    <div class="verse-list" id="verseList">
+      <div class="bible-loading">Loading…</div>
+    </div>
+  </div>
+</div>
+
+<!-- ── DMS PAGE ── -->
+<div class="page" id="page-dms">
+  <div class="dm-page">
+    <div class="sec-head">
+      <div><div class="sec-title">✉️ Direct Messages</div></div>
+    </div>
+    <div id="dmGate" class="sign-in-gate" style="display:none">
+      ✝ Please <a href="#" onclick="goPage('profile')">sign in</a> to view messages.
+    </div>
+    <div id="dmListArea" style="display:none">
+      <button class="new-dm-btn" onclick="showNewDM()">
+        <span style="font-size:1.2rem">✏️</span> Start a New Conversation
+      </button>
+      <div class="dm-list" id="dmListEl"></div>
+      <div id="dmEmptyEl" class="empty" style="display:none">
+        <div class="ei">✉️</div><p>No conversations yet.<br>DM someone from a question!</p>
       </div>
     </div>
   </div>
@@ -932,22 +477,18 @@ select.field-input { cursor: pointer; }
 <div class="page" id="page-profile">
   <div id="profileArea" style="display:none">
     <div class="profile-page">
-      <div class="profile-header-card">
+      <div class="profile-hero">
         <div class="profile-big-av" id="profileAv">?</div>
         <div>
           <div class="profile-name" id="profileName">—</div>
           <div class="profile-email" id="profileEmail">—</div>
+          <div style="margin-top:5px" id="modBadgeArea"></div>
         </div>
       </div>
       <div class="profile-card">
-        <div class="profile-row" onclick="goPage('feed')">
-          <span class="row-icon">🏠</span>
-          <span class="row-label">My Feed</span>
-          <span class="row-arrow">›</span>
-        </div>
         <div class="profile-row" onclick="toggleDark()">
-          <span class="row-icon" id="themeRowIcon">🌙</span>
-          <div><div class="row-label">Dark Mode</div></div>
+          <span class="ri" id="themeRi">🌙</span>
+          <div class="rl">Dark Mode</div>
           <div class="toggle-sw" id="darkSw"></div>
         </div>
       </div>
@@ -960,62 +501,138 @@ select.field-input { cursor: pointer; }
         <div class="auth-top">
           <span class="auth-cross">✝</span>
           <div class="auth-title">GraceQ</div>
-          <div class="auth-sub">A place to seek, question & grow in faith</div>
+          <div class="auth-sub">Christian Questions & Community</div>
         </div>
         <div class="auth-tabs">
-          <button class="auth-tab active" id="tabSignIn" onclick="switchTab('signin')">Sign In</button>
+          <button class="auth-tab active" id="tabSI" onclick="switchTab('signin')">Sign In</button>
           <button class="auth-tab" id="tabJoin" onclick="switchTab('join')">Join Free</button>
         </div>
-        <div id="formSignIn" class="auth-form">
+        <!-- SIGN IN FORM -->
+        <div id="fmSignin" class="auth-form">
           <div class="error-box" id="siErr"></div>
-          <div><label class="field-label">Email</label><input class="field-input" id="siEmail" type="email" placeholder="your@email.com"></div>
-          <div><label class="field-label">Password</label><input class="field-input" id="siPass" type="password" placeholder="••••••••" onkeydown="if(event.key==='Enter')doLogin()"></div>
+          <div class="success-box" id="siOk"></div>
+          <div class="form-group"><label class="field-label">Email</label>
+            <input class="field-input" id="siEmail" type="email" placeholder="your@email.com">
+          </div>
+          <div class="form-group"><label class="field-label">Password</label>
+            <input class="field-input" id="siPass" type="password" placeholder="••••••••" onkeydown="if(event.key==='Enter')doLogin()">
+          </div>
           <button class="submit-btn" id="siBtn" onclick="doLogin()">Sign In</button>
+          <div style="text-align:center">
+            <button class="link-btn" onclick="doForgotPass()">Forgot Password?</button>
+          </div>
         </div>
-        <div id="formJoin" class="auth-form" style="display:none">
+        <!-- JOIN FORM (with email verification code) -->
+        <div id="fmJoin" class="auth-form" style="display:none">
           <div class="error-box" id="joinErr"></div>
-          <div><label class="field-label">Your Name</label><input class="field-input" id="joinName" placeholder="e.g. Grace Walker"></div>
-          <div><label class="field-label">Email</label><input class="field-input" id="joinEmail" type="email" placeholder="your@email.com"></div>
-          <div><label class="field-label">Password</label><input class="field-input" id="joinPass" type="password" placeholder="At least 6 characters" onkeydown="if(event.key==='Enter')doRegister()"></div>
-          <button class="submit-btn" id="joinBtn" onclick="doRegister()">Create Account ✝</button>
+          <!-- Step 1: details -->
+          <div id="joinStep1">
+            <div class="form-group"><label class="field-label">Your Name</label>
+              <input class="field-input" id="joinName" placeholder="e.g. Grace Walker">
+            </div>
+            <div class="form-group"><label class="field-label">Email</label>
+              <input class="field-input" id="joinEmail" type="email" placeholder="your@email.com">
+            </div>
+            <div class="form-group"><label class="field-label">Password</label>
+              <input class="field-input" id="joinPass" type="password" placeholder="At least 6 characters">
+            </div>
+            <button class="submit-btn" id="joinBtn" onclick="doRegister()">Create Account & Send Code ✝</button>
+          </div>
+          <!-- Step 2: verify code -->
+          <div id="joinStep2" style="display:none">
+            <div class="verify-notice" id="verifyNotice" style="display:block">
+              ✉️ A verification email has been sent. Please click the link in your email to verify, then click below.
+            </div>
+            <div style="height:10px"></div>
+            <button class="submit-btn" id="verifyBtn" onclick="checkVerified()">I've Verified My Email ✅</button>
+            <div style="text-align:center;margin-top:10px">
+              <button class="link-btn" onclick="resendVerify()">Resend Email</button>
+            </div>
+          </div>
         </div>
       </div>
     </div>
   </div>
 </div>
 
+<!-- ── MOD PAGE ── -->
+<div class="page" id="page-mod">
+  <div class="mod-page">
+    <div class="mod-header">
+      <h2>🛡 Moderation Panel</h2>
+      <p>GraceQ Community Management</p>
+    </div>
+    <div class="mod-tabs">
+      <button class="mod-tab active" onclick="modTab('reports',this)">⚑ Reports</button>
+      <button class="mod-tab" onclick="modTab('questions',this)">❓ Questions</button>
+      <button class="mod-tab" onclick="modTab('comments',this)">💬 Answers</button>
+      <button class="mod-tab" onclick="modTab('users',this)">👥 Users</button>
+    </div>
+    <div class="mod-section active" id="modReports">
+      <div id="reportsListEl"><div class="empty"><div class="ei">⚑</div><p>No reports yet.</p></div></div>
+    </div>
+    <div class="mod-section" id="modQuestions">
+      <div id="modQListEl"><div class="skel"></div></div>
+    </div>
+    <div class="mod-section" id="modComments">
+      <div id="modCListEl"><div class="empty"><div class="ei">💬</div><p>Select a question to see answers.</p></div></div>
+    </div>
+    <div class="mod-section" id="modUsers">
+      <div id="modUListEl"><div class="skel"></div></div>
+    </div>
+  </div>
+</div>
+
 <!-- CHAT BOTTOM SHEET -->
-<div class="sheet-backdrop" id="chatBackdrop" onclick="closeChat()"></div>
-<div class="chat-sheet" id="chatSheet">
+<div class="sheet-backdrop" id="chatBack" onclick="closeChat()"></div>
+<div class="bottom-sheet" id="chatSheet">
   <div class="sheet-handle"></div>
-  <div class="sheet-header">
-    <div class="sheet-q-title" id="sheetQTitle">Discussion</div>
-    <div class="sheet-meta">
-      <span class="q-stat"><span id="sheetCount">0</span>&nbsp;answers</span>
-      <button class="report-tiny" onclick="showReport('question', activeChatId)" style="margin-left:auto">⚑ Report</button>
+  <div class="sheet-hd">
+    <div class="sheet-title" id="sheetQTitle">Discussion</div>
+    <div style="display:flex;align-items:center;gap:8px;margin-top:4px">
+      <span style="font-size:.75rem;color:var(--text3)"><span id="sheetCount">0</span> answers</span>
+      <button class="report-tiny" onclick="showReport('question',window._chatQid)" style="margin-left:auto">⚑ Report question</button>
     </div>
   </div>
   <div class="sheet-msgs" id="sheetMsgs"></div>
-  <div class="profanity-bar" id="profBar">⚠ Please keep discussion respectful and Christ-centered.</div>
+  <div class="prof-bar" id="profBar">⚠ Please keep discussion respectful and Christ-centered.</div>
   <div class="sheet-input-row">
-    <textarea class="sheet-textarea" id="sheetInput" placeholder="Share your thoughts or answer…" rows="1"
+    <textarea class="sheet-ta" id="sheetIn" placeholder="Answer or share a thought…" rows="1"
       onkeydown="if(event.key==='Enter'&&!event.shiftKey){event.preventDefault();sendMsg();}"></textarea>
     <button class="send-btn" onclick="sendMsg()">➤</button>
   </div>
 </div>
 
 <!-- DM BOTTOM SHEET -->
-<div class="chat-sheet dm-sheet" id="dmSheet">
+<div class="bottom-sheet" id="dmSheet" style="z-index:401;max-height:85vh">
   <div class="sheet-handle"></div>
-  <div class="sheet-header">
-    <div class="sheet-q-title" id="dmSheetTitle">Direct Message</div>
-    <button class="report-tiny" style="margin-top:4px" onclick="document.getElementById('dmSheet').classList.remove('open');document.getElementById('chatBackdrop').classList.remove('open')">✕ Close</button>
+  <div class="sheet-hd">
+    <div class="sheet-title" id="dmSheetTitle">Direct Message</div>
+    <button class="report-tiny" onclick="closeDMSheet()" style="margin-top:4px">✕ Close</button>
   </div>
   <div class="sheet-msgs" id="dmMsgs"></div>
   <div class="sheet-input-row">
-    <textarea class="sheet-textarea" id="dmInput" placeholder="Message…" rows="1"
+    <textarea class="sheet-ta" id="dmIn" placeholder="Message…" rows="1"
       onkeydown="if(event.key==='Enter'&&!event.shiftKey){event.preventDefault();sendDM();}"></textarea>
     <button class="send-btn" onclick="sendDM()">➤</button>
+  </div>
+</div>
+
+<!-- NEW DM MODAL -->
+<div class="modal-overlay" id="newDMModal">
+  <div class="modal">
+    <h3>New Message</h3>
+    <p>Enter the username or email of who you'd like to message.</p>
+    <div class="form-group"><label class="field-label">Their Display Name</label>
+      <input class="field-input" id="newDMName" placeholder="e.g. Grace Walker">
+    </div>
+    <div class="form-group"><label class="field-label">Their User ID</label>
+      <input class="field-input" id="newDMUid" placeholder="Paste from their profile (or from a question)">
+    </div>
+    <div class="modal-btns">
+      <button class="btn btn-ghost" onclick="closeModal('newDMModal')">Cancel</button>
+      <button class="btn btn-primary" onclick="startNewDM()">Open Chat</button>
+    </div>
   </div>
 </div>
 
@@ -1023,8 +640,8 @@ select.field-input { cursor: pointer; }
 <div class="modal-overlay" id="reportModal">
   <div class="modal">
     <h3>Report Content</h3>
-    <p>Help keep GraceQ a safe, Christ-honoring space.</p>
-    <div><label class="field-label">Reason</label>
+    <p>Help keep GraceQ a Christ-honoring space.</p>
+    <div class="form-group"><label class="field-label">Reason</label>
       <select class="field-input" id="reportReason">
         <option>Disrespectful or offensive</option>
         <option>Spam or self-promotion</option>
@@ -1034,7 +651,7 @@ select.field-input { cursor: pointer; }
         <option>Other</option>
       </select>
     </div>
-    <div style="margin-top:10px"><label class="field-label">Details (optional)</label>
+    <div class="form-group"><label class="field-label">Details (optional)</label>
       <textarea class="field-input" id="reportDetails" rows="2" placeholder="Tell us more…"></textarea>
     </div>
     <div class="modal-btns">
@@ -1044,242 +661,322 @@ select.field-input { cursor: pointer; }
   </div>
 </div>
 
+<!-- DELETE CONFIRM MODAL -->
+<div class="modal-overlay" id="deleteModal">
+  <div class="modal">
+    <h3>Delete Content</h3>
+    <p id="deleteMsg">Are you sure you want to delete this? This cannot be undone.</p>
+    <div class="modal-btns">
+      <button class="btn btn-ghost" onclick="closeModal('deleteModal')">Cancel</button>
+      <button class="btn btn-danger" onclick="confirmDelete()">Delete</button>
+    </div>
+  </div>
+</div>
+
 <div class="toasts" id="toasts"></div>
 
-<!-- FIREBASE -->
+<!-- ═══════════════════════════════════════
+     FIREBASE + APP LOGIC
+     ═══════════════════════════════════════ -->
 <script type="module">
 import { initializeApp } from "https://www.gstatic.com/firebasejs/11.0.0/firebase-app.js";
-import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut, onAuthStateChanged, updateProfile }
-  from "https://www.gstatic.com/firebasejs/11.0.0/firebase-auth.js";
-import { getFirestore, collection, addDoc, onSnapshot, doc, updateDoc, serverTimestamp, query, orderBy, setDoc, getDocs, increment }
-  from "https://www.gstatic.com/firebasejs/11.0.0/firebase-firestore.js";
+import {
+  getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword,
+  signOut, onAuthStateChanged, updateProfile,
+  sendPasswordResetEmail, sendEmailVerification, reload
+} from "https://www.gstatic.com/firebasejs/11.0.0/firebase-auth.js";
+import {
+  getFirestore, collection, addDoc, onSnapshot, doc, updateDoc, deleteDoc,
+  serverTimestamp, query, orderBy, setDoc, getDocs, getDoc,
+  increment, where, limit
+} from "https://www.gstatic.com/firebasejs/11.0.0/firebase-firestore.js";
 
 const app = initializeApp({
-  apiKey: "AIzaSyAw1tMqT0R16bK-RgP2JZu5D8zP12MnBcc",
-  authDomain: "ai-test-99c32.firebaseapp.com",
-  projectId: "ai-test-99c32",
-  storageBucket: "ai-test-99c32.firebasestorage.app",
-  messagingSenderId: "72409067319",
-  appId: "1:72409067319:web:cc3b3d7fb5408fc3f4b4b2",
-  measurementId: "G-0PLP8QNDWN"
+  apiKey:"AIzaSyAw1tMqT0R16bK-RgP2JZu5D8zP12MnBcc",
+  authDomain:"ai-test-99c32.firebaseapp.com",
+  projectId:"ai-test-99c32",
+  storageBucket:"ai-test-99c32.firebasestorage.app",
+  messagingSenderId:"72409067319",
+  appId:"1:72409067319:web:cc3b3d7fb5408fc3f4b4b2",
+  measurementId:"G-0PLP8QNDWN"
 });
 const auth = getAuth(app);
-const db = getFirestore(app);
+const db   = getFirestore(app);
 
-// ── STATE ──
-let currentUser = null;
+/* ─────────────── STATE ─────────────── */
+let CU = null;           // currentUser (Firebase)
+let userDoc = null;      // Firestore user doc
+let isMod = false;
 let allQuestions = [];
 let currentSort = 'newest';
 let currentTopic = '';
-let activeChatId = null;
-let chatUnsub = null;
-let dmTarget = null;
-let dmUnsub = null;
-let reportTarget = null;
 let anonPost = false;
-let selectedTopic = 'Scripture';
+let selTopicVal = 'Scripture';
 let isDark = false;
 
-// ── EXPOSE GLOBALS ──
-window.activeChatId = null;
-window.goPage = goPage;
-window.toggleDark = toggleDark;
-window.filterTopic = filterTopic;
-window.setSort = setSort;
-window.renderFeed = renderFeed;
-window.submitQuestion = submitQuestion;
-window.doLogin = doLogin;
-window.doRegister = doRegister;
-window.doSignOut = doSignOut;
-window.openChat = openChat;
-window.closeChat = closeChat;
-window.sendMsg = sendMsg;
-window.openDM = openDM;
-window.sendDM = sendDM;
-window.showReport = showReport;
-window.submitReport = submitReport;
-window.closeModal = closeModal;
-window.switchTab = switchTab;
-window.selectTopic = selectTopic;
-window.toggleAnon = toggleAnon;
+let chatQid = null;      // active chat question id
+let chatUnsub = null;
+let dmTarget = null;     // {uid, name}
+let dmUnsub = null;
+let dmConvos = [];       // list of DM conversations
+let reportTarget = null;
+let deleteTarget = null; // {type, id, parentId?}
 
-// ── VERSES ──
-const VERSES = [
-  { text: "For God so loved the world that He gave His only Son, that whoever believes in Him shall not perish but have eternal life.", ref: "John 3:16" },
-  { text: "I can do all things through Christ who strengthens me.", ref: "Philippians 4:13" },
-  { text: "Trust in the Lord with all your heart and lean not on your own understanding.", ref: "Proverbs 3:5" },
-  { text: "The Lord is my shepherd; I shall not want.", ref: "Psalm 23:1" },
-  { text: "Be still, and know that I am God.", ref: "Psalm 46:10" },
-  { text: "For I know the plans I have for you, declares the Lord, plans to prosper you and not to harm you.", ref: "Jeremiah 29:11" },
-  { text: "Cast all your anxiety on Him because He cares for you.", ref: "1 Peter 5:7" },
-];
-const PROFANITY = ["damn","hell","crap","ass","bastard","idiot","stupid","dumb","loser","wtf","bs","shit","fuck","pussy","nigger"];
+window._chatQid = null;
 
-const v = VERSES[new Date().getDay() % VERSES.length];
-document.getElementById('verseText').textContent = v.text;
-document.getElementById('verseRef').textContent = `— ${v.ref}`;
-
-// ── HELPERS ──
-function toast(msg, type='') {
-  const tc = document.getElementById('toasts');
-  const t = document.createElement('div');
-  t.className = `toast ${type==='success'?'s':type==='error'?'e':''}`;
-  t.textContent = msg;
-  tc.appendChild(t);
-  setTimeout(() => { t.style.opacity='0'; t.style.transition='.3s'; setTimeout(()=>t.remove(),300); }, 3200);
+/* ─────────────── HELPERS ─────────────── */
+const $ = id => document.getElementById(id);
+function toast(msg,t=''){
+  const el=document.createElement('div');
+  el.className=`toast ${t==='success'?'s':t==='error'?'e':''}`;
+  el.textContent=msg;
+  $('toasts').appendChild(el);
+  setTimeout(()=>{el.style.opacity='0';el.style.transition='.3s';setTimeout(()=>el.remove(),300);},3500);
 }
-function esc(s='') { return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;'); }
-function timeAgo(ts) {
-  if (!ts) return '';
-  const ms = ts.toMillis ? ts.toMillis() : ts;
-  const d = Date.now()-ms, m=Math.floor(d/60000), h=Math.floor(d/3600000), dy=Math.floor(d/86400000);
-  if (m<1) return 'just now';
-  if (m<60) return `${m}m ago`;
-  if (h<24) return `${h}h ago`;
-  if (dy<30) return `${dy}d ago`;
+function esc(s=''){return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');}
+function timeAgo(ts){
+  if(!ts)return'';
+  const ms=ts.toMillis?ts.toMillis():ts;
+  const d=Date.now()-ms,m=Math.floor(d/60000),h=Math.floor(d/3600000),dy=Math.floor(d/86400000);
+  if(m<1)return'just now';if(m<60)return`${m}m ago`;if(h<24)return`${h}h ago`;if(dy<30)return`${dy}d ago`;
   return new Date(ms).toLocaleDateString();
 }
-function checkProf(t) { const l=t.toLowerCase(); return PROFANITY.some(w=>l.includes(w)); }
-function cleanProf(t) { let o=t; PROFANITY.forEach(w=>{o=o.replace(new RegExp(w,'gi'),'*'.repeat(w.length));}); return o; }
-function setLoading(id, on, orig) {
-  const b=document.getElementById(id); if(!b) return;
-  if(on){b.disabled=true;b.innerHTML='<span class="spin"></span>';}
+const PROF=['damn','hell','crap','ass','bastard','idiot','stupid','dumb','loser','wtf','bs','shit','fuck'];
+function hasProf(t){const l=t.toLowerCase();return PROF.some(w=>l.includes(w));}
+function cleanProf(t){let o=t;PROF.forEach(w=>{o=o.replace(new RegExp(w,'gi'),'*'.repeat(w.length));});return o;}
+function setBtn(id,loading,orig){
+  const b=$(id);if(!b)return;
+  if(loading){b.disabled=true;b.innerHTML='<span class="spin"></span>';}
   else{b.disabled=false;b.textContent=orig;}
 }
-function closeModal(id) { document.getElementById(id).classList.remove('open'); }
 
-// ── DARK MODE ──
-function toggleDark() {
-  isDark = !isDark;
-  document.documentElement.setAttribute('data-theme', isDark?'dark':'light');
-  document.getElementById('darkBtn').textContent = isDark ? '☀️' : '🌙';
-  document.getElementById('themeRowIcon').textContent = isDark ? '☀️' : '🌙';
-  const sw = document.getElementById('darkSw');
-  if(sw) sw.classList.toggle('on', isDark);
+/* ─────────────── EXPOSE TO HTML ─────────────── */
+Object.assign(window,{
+  goPage,toggleDark,filterTopic,setSort,renderFeed,
+  submitQuestion,doLogin,doRegister,doSignOut,doForgotPass,checkVerified,resendVerify,
+  openChat,closeChat,sendMsg,openDM,sendDM,closeDMSheet,showNewDM,startNewDM,
+  showReport,submitReport,closeModal,switchTab,selTopic,toggleAnon,
+  modTab,modDeleteQ,modDeleteC,modBanUser,confirmDelete,
+  onBookChange,changeChap,loadChapter,
+});
+
+/* ─────────────── VERSE OF DAY ─────────────── */
+const VERSES=[
+  {text:"For God so loved the world that He gave His only Son, that whoever believes in Him shall not perish but have eternal life.",ref:"John 3:16"},
+  {text:"I can do all things through Christ who strengthens me.",ref:"Philippians 4:13"},
+  {text:"Trust in the Lord with all your heart and lean not on your own understanding.",ref:"Proverbs 3:5"},
+  {text:"The Lord is my shepherd; I shall not want.",ref:"Psalm 23:1"},
+  {text:"Be still, and know that I am God.",ref:"Psalm 46:10"},
+  {text:"For I know the plans I have for you, declares the Lord.",ref:"Jeremiah 29:11"},
+  {text:"Cast all your anxiety on Him because He cares for you.",ref:"1 Peter 5:7"},
+];
+const vv=VERSES[new Date().getDay()%VERSES.length];
+$('verseText').textContent=vv.text;$('verseRef').textContent=`— ${vv.ref}`;
+
+/* ─────────────── DARK MODE ─────────────── */
+function toggleDark(){
+  isDark=!isDark;
+  document.documentElement.setAttribute('data-theme',isDark?'dark':'light');
+  $('darkBtn').textContent=isDark?'☀️':'🌙';
+  $('themeRi').textContent=isDark?'☀️':'🌙';
+  $('darkSw')?.classList.toggle('on',isDark);
 }
 
-// ── PAGES ──
-function goPage(name) {
+/* ─────────────── PAGES ─────────────── */
+function goPage(name){
   document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
   document.querySelectorAll('.nav-item').forEach(n=>n.classList.remove('active'));
-  document.getElementById('page-'+name).classList.add('active');
-  document.getElementById('nav-'+name)?.classList.add('active');
+  $('page-'+name)?.classList.add('active');
+  $('nav-'+name)?.classList.add('active');
   window.scrollTo(0,0);
+  if(name==='dms')renderDMList();
+  if(name==='mod'){renderModReports();renderModQuestions();}
+  if(name==='bible'&&!bibleInited)initBible();
 }
 
-// ── AUTH TABS ──
-function switchTab(tab) {
-  document.getElementById('tabSignIn').classList.toggle('active', tab==='signin');
-  document.getElementById('tabJoin').classList.toggle('active', tab==='join');
-  document.getElementById('formSignIn').style.display = tab==='signin' ? 'flex' : 'none';
-  document.getElementById('formJoin').style.display = tab==='join' ? 'flex' : 'none';
+/* ─────────────── AUTH TABS ─────────────── */
+function switchTab(t){
+  $('tabSI').classList.toggle('active',t==='signin');
+  $('tabJoin').classList.toggle('active',t==='join');
+  $('fmSignin').style.display=t==='signin'?'flex':'none';
+  $('fmJoin').style.display=t==='join'?'flex':'none';
 }
 
-// ── AUTH STATE ──
-onAuthStateChanged(auth, async user => {
-  currentUser = user;
-  const authArea = document.getElementById('authArea');
-  const profileArea = document.getElementById('profileArea');
-  const headerAuth = document.getElementById('headerAuthArea');
-  const askCard = document.getElementById('askCard');
-  const askGate = document.getElementById('askGate');
-  if (user) {
-    const name = user.displayName || user.email.split('@')[0];
-    authArea.style.display = 'none';
-    profileArea.style.display = 'block';
-    document.getElementById('profileAv').textContent = name[0].toUpperCase();
-    document.getElementById('profileName').textContent = name;
-    document.getElementById('profileEmail').textContent = user.email;
-    headerAuth.innerHTML = `<div class="user-avatar-btn" onclick="goPage('profile')">${name[0].toUpperCase()}</div>`;
-    askCard.style.display = 'block';
-    askGate.style.display = 'none';
-    try { await setDoc(doc(db,'users',user.uid),{displayName:name,lastSeen:serverTimestamp()},{merge:true}); } catch(e){}
-  } else {
-    authArea.style.display = 'block';
-    profileArea.style.display = 'none';
-    headerAuth.innerHTML = `<button class="icon-btn" onclick="goPage('profile')" style="font-size:.75rem;font-weight:700;width:auto;padding:0 10px;border-radius:20px;">Sign In</button>`;
-    askCard.style.display = 'none';
-    askGate.style.display = 'block';
+/* ─────────────── AUTH STATE ─────────────── */
+onAuthStateChanged(auth, async user=>{
+  CU=user;
+  const authArea=$('authArea'), profileArea=$('profileArea');
+  const askCard=$('askCardWrap'), askGate=$('askGate');
+  const dmGate=$('dmGate'), dmListArea=$('dmListArea');
+  if(user){
+    // fetch user doc
+    try{
+      const ud=await getDoc(doc(db,'users',user.uid));
+      userDoc=ud.exists()?ud.data():null;
+      isMod=userDoc?.isMod===true;
+    }catch(e){isMod=false;}
+
+    const name=user.displayName||user.email.split('@')[0];
+    authArea.style.display='none';profileArea.style.display='block';
+    $('profileAv').textContent=name[0].toUpperCase();
+    $('profileName').textContent=name;
+    $('profileEmail').textContent=user.email;
+    $('headerAuthEl').innerHTML=`<div class="user-av-btn" onclick="goPage('profile')">${name[0].toUpperCase()}</div>`;
+    askCard.style.display='block';askGate.style.display='none';
+    dmGate.style.display='none';dmListArea.style.display='block';
+    $('modBadgeArea').innerHTML=isMod?'<span class="mod-badge">🛡 Moderator</span>':'';
+
+    // inject mod nav
+    injectModNav();
+
+    // save user doc
+    try{await setDoc(doc(db,'users',user.uid),{displayName:name,email:user.email,lastSeen:serverTimestamp()},{merge:true});}catch(e){}
+    loadDMConvos();
+  }else{
+    CU=null;isMod=false;userDoc=null;
+    authArea.style.display='block';profileArea.style.display='none';
+    $('headerAuthEl').innerHTML=`<button class="icon-btn" onclick="goPage('profile')" style="font-size:.72rem;font-weight:800;width:auto;padding:0 11px;border-radius:20px;letter-spacing:.03em;">Sign In</button>`;
+    askCard.style.display='none';askGate.style.display='block';
+    dmGate.style.display='block';dmListArea.style.display='none';
+    removeModNav();
   }
 });
 
-async function doLogin() {
-  const email = document.getElementById('siEmail').value.trim();
-  const pass = document.getElementById('siPass').value;
-  const err = document.getElementById('siErr');
-  err.style.display='none';
-  if (!email||!pass){err.textContent='Please fill in all fields.';err.style.display='block';return;}
-  setLoading('siBtn',true);
-  try {
-    await signInWithEmailAndPassword(auth,email,pass);
-    toast('Welcome back! 🙏','success');
-    goPage('feed');
-  } catch(e) {
-    err.textContent = e.code?.includes('credential')||e.code?.includes('password')||e.code?.includes('user-not-found') ? 'Invalid email or password.' : e.message;
-    err.style.display='block';
-  }
-  setLoading('siBtn',false,'Sign In');
+function injectModNav(){
+  if(!isMod)return;
+  if($('nav-mod'))return;
+  const nav=document.querySelector('.bottom-nav');
+  const btn=document.createElement('button');
+  btn.className='nav-item mod-nav';btn.id='nav-mod';
+  btn.innerHTML='<span class="nav-icon">🛡</span>Mod';
+  btn.onclick=()=>goPage('mod');
+  nav.appendChild(btn);
+  // adjust nav items font
+  document.querySelectorAll('.nav-item').forEach(n=>n.style.fontSize='.56rem');
 }
-async function doRegister() {
-  const name = document.getElementById('joinName').value.trim();
-  const email = document.getElementById('joinEmail').value.trim();
-  const pass = document.getElementById('joinPass').value;
-  const err = document.getElementById('joinErr');
-  err.style.display='none';
-  if (!name||!email||!pass){err.textContent='Please fill in all fields.';err.style.display='block';return;}
-  if (pass.length<6){err.textContent='Password must be at least 6 characters.';err.style.display='block';return;}
-  setLoading('joinBtn',true);
-  try {
-    const c = await createUserWithEmailAndPassword(auth,email,pass);
-    await updateProfile(c.user,{displayName:name});
-    toast(`Welcome to GraceQ, ${name}! ✝️`,'success');
-    goPage('feed');
-  } catch(e) {
-    err.textContent = e.code==='auth/email-already-in-use' ? 'That email is already registered.' : e.message;
-    err.style.display='block';
-  }
-  setLoading('joinBtn',false,'Create Account ✝');
-}
-async function doSignOut() { await signOut(auth); toast('Signed out. Go in peace. ✝️'); goPage('feed'); }
+function removeModNav(){$('nav-mod')?.remove();}
 
-// ── FEED LISTENER ──
-const feedQ = query(collection(db,'questions'),orderBy('createdAt','desc'));
-onSnapshot(feedQ, snap => {
-  allQuestions = snap.docs.map(d=>({id:d.id,...d.data()}));
+/* ─────────────── LOGIN ─────────────── */
+async function doLogin(){
+  const email=$('siEmail').value.trim(),pass=$('siPass').value;
+  const err=$('siErr'),ok=$('siOk');
+  err.style.display='none';ok.style.display='none';
+  if(!email||!pass){err.textContent='Please fill in all fields.';err.style.display='block';return;}
+  setBtn('siBtn',true);
+  try{
+    const cred=await signInWithEmailAndPassword(auth,email,pass);
+    if(!cred.user.emailVerified){
+      await signOut(auth);
+      err.textContent='Please verify your email first. Check your inbox.';err.style.display='block';
+      setBtn('siBtn',false,'Sign In');return;
+    }
+    toast('Welcome back! 🙏','success');goPage('feed');
+  }catch(e){
+    err.textContent=e.code?.includes('credential')||e.code?.includes('password')||e.code?.includes('user-not-found')?'Invalid email or password.':e.message;
+    err.style.display='block';
+  }
+  setBtn('siBtn',false,'Sign In');
+}
+
+/* ─────────────── FORGOT PASSWORD ─────────────── */
+async function doForgotPass(){
+  const email=$('siEmail').value.trim();
+  const err=$('siErr'),ok=$('siOk');
+  err.style.display='none';ok.style.display='none';
+  if(!email){err.textContent='Enter your email above first.';err.style.display='block';return;}
+  try{
+    await sendPasswordResetEmail(auth,email);
+    ok.textContent='✅ Password reset email sent! Check your inbox.';ok.style.display='block';
+  }catch(e){
+    err.textContent=e.code==='auth/user-not-found'?'No account found with that email.':e.message;err.style.display='block';
+  }
+}
+
+/* ─────────────── REGISTER + EMAIL VERIFY ─────────────── */
+let pendingCred=null;
+async function doRegister(){
+  const name=$('joinName').value.trim(),email=$('joinEmail').value.trim(),pass=$('joinPass').value;
+  const err=$('joinErr');err.style.display='none';
+  if(!name||!email||!pass){err.textContent='Please fill in all fields.';err.style.display='block';return;}
+  if(pass.length<6){err.textContent='Password must be at least 6 characters.';err.style.display='block';return;}
+  setBtn('joinBtn',true);
+  try{
+    const cred=await createUserWithEmailAndPassword(auth,email,pass);
+    await updateProfile(cred.user,{displayName:name});
+    await sendEmailVerification(cred.user);
+    pendingCred=cred;
+    await signOut(auth); // sign out until verified
+    $('joinStep1').style.display='none';
+    $('joinStep2').style.display='block';
+    toast('Verification email sent! ✝️');
+  }catch(e){
+    err.textContent=e.code==='auth/email-already-in-use'?'That email is already registered.':e.message;err.style.display='block';
+    setBtn('joinBtn',false,'Create Account & Send Code ✝');
+  }
+}
+async function checkVerified(){
+  setBtn('verifyBtn',true);
+  try{
+    // Re-sign in to check verification
+    const cred=await signInWithEmailAndPassword(auth,$('joinEmail').value.trim(),$('joinPass').value);
+    await reload(cred.user);
+    if(cred.user.emailVerified){
+      toast(`Welcome to GraceQ, ${cred.user.displayName}! ✝️`,'success');
+      goPage('feed');
+      $('joinStep1').style.display='block';$('joinStep2').style.display='none';
+    }else{
+      await signOut(auth);
+      $('joinErr').textContent='Email not verified yet. Please click the link in your email.';
+      $('joinErr').style.display='block';
+    }
+  }catch(e){$('joinErr').textContent=e.message;$('joinErr').style.display='block';}
+  setBtn('verifyBtn',false,"I've Verified My Email ✅");
+}
+async function resendVerify(){
+  try{
+    const cred=await signInWithEmailAndPassword(auth,$('joinEmail').value.trim(),$('joinPass').value);
+    await sendEmailVerification(cred.user);
+    await signOut(auth);
+    toast('Verification email resent!','success');
+  }catch(e){toast('Could not resend: '+e.message,'error');}
+}
+async function doSignOut(){await signOut(auth);toast('Signed out. Go in peace. ✝️');goPage('feed');}
+
+/* ─────────────── FEED ─────────────── */
+const feedQ=query(collection(db,'questions'),orderBy('createdAt','desc'));
+onSnapshot(feedQ,snap=>{
+  allQuestions=snap.docs.map(d=>({id:d.id,...d.data()}));
   renderFeed();
-}, err => {
-  document.getElementById('feedList').innerHTML = `<div class="empty"><div class="ei">⚠️</div><p>Could not load questions.<br>Check Firestore rules.</p></div>`;
+},err=>{
+  $('feedList').innerHTML=`<div class="empty"><div class="ei">⚠️</div><p>Could not load.<br>Check Firestore rules.</p></div>`;
 });
 
-function renderFeed() {
-  const list_el = document.getElementById('feedList');
-  const search = document.getElementById('searchInput').value.toLowerCase();
-  let list = [...allQuestions];
-  if (currentTopic) list = list.filter(q=>q.topic===currentTopic);
-  if (search) list = list.filter(q=>(q.title||'').toLowerCase().includes(search)||(q.body||'').toLowerCase().includes(search));
-  if (currentSort==='most') list.sort((a,b)=>(b.commentCount||0)-(a.commentCount||0));
-  else if (currentSort==='least') list.sort((a,b)=>(a.commentCount||0)-(b.commentCount||0));
-  document.getElementById('qCountLabel').textContent = `${list.length} question${list.length!==1?'s':''} · live`;
-  if (!list.length) {
-    list_el.innerHTML = `<div class="empty"><div class="ei">✝</div><p>No questions yet.<br>Be the first to ask!</p></div>`;
-    return;
-  }
-  list_el.innerHTML = list.map(q => {
-    const name = q.anon ? 'Anonymous' : (q.authorName||'Member');
-    const init = q.anon ? '?' : name[0].toUpperCase();
-    const canDM = !q.anon && currentUser && q.authorId !== currentUser?.uid;
-    return `<div class="q-card" onclick="openChat('${q.id}','${esc(q.title)}',${q.commentCount||0})">
+function renderFeed(){
+  const el=$('feedList');
+  const s=$('searchIn').value.toLowerCase();
+  let list=[...allQuestions];
+  if(currentTopic)list=list.filter(q=>q.topic===currentTopic);
+  if(s)list=list.filter(q=>(q.title||'').toLowerCase().includes(s)||(q.body||'').toLowerCase().includes(s));
+  if(currentSort==='most')list.sort((a,b)=>(b.commentCount||0)-(a.commentCount||0));
+  else if(currentSort==='least')list.sort((a,b)=>(a.commentCount||0)-(b.commentCount||0));
+  $('qCountLbl').textContent=`${list.length} question${list.length!==1?'s':''} · live`;
+  if(!list.length){el.innerHTML=`<div class="empty"><div class="ei">✝</div><p>No questions yet — be the first!</p></div>`;return;}
+  el.innerHTML=list.map(q=>{
+    const nm=q.anon?'Anonymous':(q.authorName||'Member');
+    const init=q.anon?'?':nm[0].toUpperCase();
+    const canDM=!q.anon&&CU&&q.authorId!==CU.uid;
+    return `<div class="q-card">
       <div class="q-meta">
-        <div class="q-avatar ${q.anon?'anon':''}">${init}</div>
-        <span class="q-name">${esc(name)}</span>
+        <div class="q-av ${q.anon?'anon':''}">${init}</div>
+        <span class="q-name">${esc(nm)}</span>
         ${q.anon?'<span class="anon-pill">ANON</span>':''}
-        <span class="q-topic-badge">${esc(q.topic)}</span>
+        <span class="topic-badge">${esc(q.topic)}</span>
         <span class="q-time">${timeAgo(q.createdAt)}</span>
       </div>
       <div class="q-title">${esc(q.title)}</div>
       ${q.body?`<div class="q-body">${esc(q.body)}</div>`:''}
       <div class="q-footer">
-        <span class="q-stat">💬 <span class="num">${q.commentCount||0}</span>&nbsp;answers</span>
+        <span class="q-stat">💬 <span class="num">${q.commentCount||0}</span> answers</span>
         <div class="q-actions" onclick="event.stopPropagation()">
           ${canDM?`<button class="q-btn" onclick="openDM('${q.authorId}','${esc(q.authorName||'')}')">✉️ DM</button>`:''}
           <button class="q-btn primary" onclick="openChat('${q.id}','${esc(q.title)}',${q.commentCount||0})">Answer</button>
@@ -1289,173 +986,430 @@ function renderFeed() {
     </div>`;
   }).join('');
 }
+function filterTopic(t,el){currentTopic=t;document.querySelectorAll('.chip').forEach(c=>c.classList.remove('active'));el.classList.add('active');renderFeed();}
+function setSort(t,el){currentSort=t;document.querySelectorAll('.sort-pill').forEach(p=>p.classList.remove('active'));el.classList.add('active');renderFeed();}
 
-function filterTopic(topic, el) {
-  currentTopic = topic;
-  document.querySelectorAll('.chip').forEach(c=>c.classList.remove('active'));
-  el.classList.add('active');
-  renderFeed();
-}
-function setSort(type, el) {
-  currentSort = type;
-  document.querySelectorAll('.sort-pill').forEach(p=>p.classList.remove('active'));
-  el.classList.add('active');
-  renderFeed();
-}
-
-// ── ASK ──
-function selectTopic(el, topic) {
-  selectedTopic = topic;
-  document.querySelectorAll('.topic-opt').forEach(o=>o.classList.remove('selected'));
-  el.classList.add('selected');
-}
-function toggleAnon() {
-  anonPost = !anonPost;
-  document.getElementById('anonSw').classList.toggle('on', anonPost);
-}
-async function submitQuestion() {
-  if (!currentUser){toast('Please sign in first.','error');goPage('profile');return;}
-  const title = document.getElementById('askTitle').value.trim();
-  const body = document.getElementById('askBody').value.trim();
-  if (!title){toast('Please enter a question.','error');return;}
-  if (checkProf(title+' '+body)){toast('Please keep questions respectful.','error');return;}
-  setLoading('submitBtn',true);
-  try {
+/* ─────────────── ASK ─────────────── */
+function selTopic(el,t){selTopicVal=t;document.querySelectorAll('.topic-opt').forEach(o=>o.classList.remove('selected'));el.classList.add('selected');}
+function toggleAnon(){anonPost=!anonPost;$('anonSw').classList.toggle('on',anonPost);}
+async function submitQuestion(){
+  if(!CU){toast('Please sign in first.','error');goPage('profile');return;}
+  const title=$('askTitle').value.trim(),body=$('askBody').value.trim();
+  if(!title){toast('Please enter a question.','error');return;}
+  if(hasProf(title+' '+body)){toast('Please keep questions respectful.','error');return;}
+  setBtn('submitBtn',true);
+  try{
     await addDoc(collection(db,'questions'),{
-      title, body, topic: selectedTopic, anon: anonPost,
-      authorId: currentUser.uid,
-      authorName: anonPost ? 'Anonymous' : (currentUser.displayName||currentUser.email.split('@')[0]),
-      commentCount: 0,
-      createdAt: serverTimestamp(),
+      title,body,topic:selTopicVal,anon:anonPost,
+      authorId:CU.uid,
+      authorName:anonPost?'Anonymous':(CU.displayName||CU.email.split('@')[0]),
+      commentCount:0,createdAt:serverTimestamp(),
     });
-    document.getElementById('askTitle').value='';
-    document.getElementById('askBody').value='';
-    anonPost=false;
-    document.getElementById('anonSw').classList.remove('on');
-    toast('Question posted! ✝️ May you find wisdom.','success');
-    goPage('feed');
-  } catch(e){toast('Error: '+e.message,'error');}
-  setLoading('submitBtn',false,'Post Question ✝');
+    $('askTitle').value='';$('askBody').value='';
+    anonPost=false;$('anonSw').classList.remove('on');
+    toast('Question posted! ✝️','success');goPage('feed');
+  }catch(e){toast('Error: '+e.message,'error');}
+  setBtn('submitBtn',false,'Post Question ✝');
 }
 
-// ── CHAT SHEET ──
-function openChat(qid, qtitle, count) {
-  activeChatId = qid;
-  window.activeChatId = qid;
-  document.getElementById('sheetQTitle').textContent = qtitle;
-  document.getElementById('sheetCount').textContent = count||0;
-  document.getElementById('sheetMsgs').innerHTML = `<div style="text-align:center;padding:20px"><span class="spin" style="border-top-color:var(--navy)"></span></div>`;
-  document.getElementById('chatBackdrop').classList.add('open');
-  document.getElementById('chatSheet').classList.add('open');
-  if (chatUnsub) chatUnsub();
-  const q = query(collection(db,'questions',qid,'comments'),orderBy('createdAt','asc'));
-  chatUnsub = onSnapshot(q, snap => {
-    document.getElementById('sheetCount').textContent = snap.docs.length;
-    const msgs = document.getElementById('sheetMsgs');
-    const atBottom = msgs.scrollHeight - msgs.scrollTop - msgs.clientHeight < 80;
-    if (!snap.docs.length) {
-      msgs.innerHTML = `<div style="text-align:center;color:var(--text3);font-family:'EB Garamond',serif;font-style:italic;padding:24px 16px;font-size:1rem;">Be the first to answer and bless someone today…</div>`;
-      return;
-    }
-    msgs.innerHTML = snap.docs.map(d=>{
-      const c=d.data(); const mine=currentUser&&c.authorId===currentUser.uid;
-      return `<div class="msg-bubble ${mine?'mine':'theirs'}">
+/* ─────────────── CHAT SHEET ─────────────── */
+function openChat(qid,qtitle,count){
+  chatQid=qid;window._chatQid=qid;
+  $('sheetQTitle').textContent=qtitle;
+  $('sheetCount').textContent=count||0;
+  $('sheetMsgs').innerHTML=`<div style="text-align:center;padding:20px"><span class="spin" style="border-top-color:var(--navy)"></span></div>`;
+  $('chatBack').classList.add('open');
+  $('chatSheet').classList.add('open');
+  if(chatUnsub)chatUnsub();
+  const q=query(collection(db,'questions',qid,'comments'),orderBy('createdAt','asc'));
+  chatUnsub=onSnapshot(q,snap=>{
+    $('sheetCount').textContent=snap.docs.length;
+    const msgs=$('sheetMsgs');
+    const atBottom=msgs.scrollHeight-msgs.scrollTop-msgs.clientHeight<80;
+    if(!snap.docs.length){msgs.innerHTML=`<div style="text-align:center;color:var(--text3);font-family:'EB Garamond',serif;font-style:italic;padding:24px 14px;font-size:1rem;">Be the first to answer and bless someone…</div>`;return;}
+    msgs.innerHTML=snap.docs.map(d=>{
+      const c=d.data();const mine=CU&&c.authorId===CU.uid;
+      return `<div class="msg ${mine?'mine':'theirs'}">
         <div class="msg-author">${esc(c.authorName||'Member')}</div>
         ${esc(c.text)}
         <div class="msg-time">${timeAgo(c.createdAt)}</div>
-        <button class="msg-report" onclick="showReport('comment','${d.id}')">⚑</button>
+        <button class="msg-report-btn" onclick="showReport('comment','${d.id}')">⚑</button>
       </div>`;
     }).join('');
-    if (atBottom||snap.docChanges().some(ch=>ch.type==='added')) msgs.scrollTop=msgs.scrollHeight;
+    if(atBottom||snap.docChanges().some(ch=>ch.type==='added'))msgs.scrollTop=msgs.scrollHeight;
   });
-  setTimeout(()=>document.getElementById('sheetInput').focus(),400);
+  setTimeout(()=>$('sheetIn').focus(),350);
 }
-function closeChat() {
-  document.getElementById('chatBackdrop').classList.remove('open');
-  document.getElementById('chatSheet').classList.remove('open');
-  document.getElementById('dmSheet').classList.remove('open');
-  if (chatUnsub){chatUnsub();chatUnsub=null;}
-  activeChatId=null; window.activeChatId=null;
+function closeChat(){
+  $('chatBack').classList.remove('open');
+  $('chatSheet').classList.remove('open');
+  if(chatUnsub){chatUnsub();chatUnsub=null;}
+  chatQid=null;window._chatQid=null;
 }
-async function sendMsg() {
-  if (!currentUser){toast('Sign in to answer.','error');closeChat();goPage('profile');return;}
-  const inp=document.getElementById('sheetInput');
-  const text=inp.value.trim(); if(!text) return;
-  if (checkProf(text)){
-    document.getElementById('profBar').style.display='block';
-    setTimeout(()=>document.getElementById('profBar').style.display='none',3000);
-    inp.value=cleanProf(text); return;
+async function sendMsg(){
+  if(!CU){toast('Sign in to answer.','error');closeChat();goPage('profile');return;}
+  const inp=$('sheetIn');const text=inp.value.trim();if(!text)return;
+  if(hasProf(text)){
+    $('profBar').style.display='block';
+    setTimeout(()=>$('profBar').style.display='none',3000);
+    inp.value=cleanProf(text);return;
   }
   inp.value='';
-  try {
-    await addDoc(collection(db,'questions',activeChatId,'comments'),{
-      text, authorId:currentUser.uid,
-      authorName:currentUser.displayName||currentUser.email.split('@')[0],
+  try{
+    await addDoc(collection(db,'questions',chatQid,'comments'),{
+      text,authorId:CU.uid,
+      authorName:CU.displayName||CU.email.split('@')[0],
       createdAt:serverTimestamp(),
     });
-    await updateDoc(doc(db,'questions',activeChatId),{commentCount:increment(1)});
-  } catch(e){toast('Error sending.','error');inp.value=text;}
+    await updateDoc(doc(db,'questions',chatQid),{commentCount:increment(1)});
+  }catch(e){toast('Error sending.','error');inp.value=text;}
 }
 
-// ── DM ──
-function openDM(targetUid, targetName) {
-  if (!currentUser){toast('Sign in to send DMs.','error');goPage('profile');return;}
-  if (dmUnsub){dmUnsub();dmUnsub=null;}
-  dmTarget={uid:targetUid,name:targetName};
-  document.getElementById('dmSheetTitle').textContent = `✉️ DM to ${targetName}`;
-  const dmMsgs=document.getElementById('dmMsgs');
-  dmMsgs.innerHTML=`<div style="text-align:center;padding:16px"><span class="spin" style="border-top-color:var(--navy)"></span></div>`;
-  document.getElementById('chatBackdrop').classList.add('open');
-  document.getElementById('dmSheet').classList.add('open');
-  const dmId=[currentUser.uid,targetUid].sort().join('_');
-  const q=query(collection(db,'dms',dmId,'messages'),orderBy('createdAt','asc'));
-  dmUnsub=onSnapshot(q,snap=>{
-    if(!snap.docs.length){dmMsgs.innerHTML=`<div style="text-align:center;color:var(--text3);font-style:italic;font-family:'EB Garamond',serif;padding:24px 16px;font-size:1rem;">Start your conversation…</div>`;return;}
-    dmMsgs.innerHTML=snap.docs.map(d=>{const m=d.data();const mine=m.authorId===currentUser.uid;
-      return `<div class="msg-bubble ${mine?'mine':'theirs'}"><div class="msg-author">${esc(m.authorName)}</div>${esc(m.text)}<div class="msg-time">${timeAgo(m.createdAt)}</div></div>`;
-    }).join('');
-    dmMsgs.scrollTop=dmMsgs.scrollHeight;
+/* ─────────────── DMs ─────────────── */
+function dmId(a,b){return[a,b].sort().join('_');}
+
+async function loadDMConvos(){
+  if(!CU)return;
+  // Listen to DM convos where user is a participant
+  const q=query(collection(db,'dmConvos'),where('participants','array-contains',CU.uid),orderBy('lastAt','desc'));
+  onSnapshot(q,snap=>{
+    dmConvos=snap.docs.map(d=>({id:d.id,...d.data()}));
+    renderDMList();
+    // badge
+    const unread=dmConvos.filter(c=>c.unread&&c.unread[CU.uid]).length;
+    const badge=$('dmBadge');
+    if(unread>0){badge.textContent=unread;badge.classList.add('show');}else badge.classList.remove('show');
   });
-  setTimeout(()=>document.getElementById('dmInput').focus(),400);
-}
-async function sendDM() {
-  if(!currentUser||!dmTarget) return;
-  const inp=document.getElementById('dmInput');
-  const text=inp.value.trim(); if(!text) return;
-  if(checkProf(text)){toast('Please keep messages respectful.','error');return;}
-  const dmId=[currentUser.uid,dmTarget.uid].sort().join('_');
-  inp.value='';
-  try {
-    await addDoc(collection(db,'dms',dmId,'messages'),{
-      text,authorId:currentUser.uid,
-      authorName:currentUser.displayName||currentUser.email.split('@')[0],
-      createdAt:serverTimestamp(),
-    });
-  } catch(e){toast('Could not send message.','error');inp.value=text;}
 }
 
-// ── REPORT ──
-function showReport(type,id) {
-  reportTarget={type,id};
-  document.getElementById('reportModal').classList.add('open');
+function renderDMList(){
+  if(!CU){return;}
+  const el=$('dmListEl'),empty=$('dmEmptyEl');
+  if(!dmConvos.length){el.innerHTML='';empty.style.display='block';return;}
+  empty.style.display='none';
+  el.innerHTML=dmConvos.map(c=>{
+    const other=c.participants.find(p=>p!==CU.uid);
+    const otherName=c.names?c.names[other]:'Member';
+    const init=otherName[0].toUpperCase();
+    const unread=c.unread&&c.unread[CU.uid];
+    return `<div class="dm-item" onclick="openDM('${other}','${esc(otherName)}')">
+      <div class="dm-av">${init}</div>
+      <div style="flex:1;min-width:0">
+        <div class="dm-name">${esc(otherName)} ${unread?'<span class="pill-badge">New</span>':''}</div>
+        <div class="dm-preview">${esc(c.lastMsg||'')}</div>
+      </div>
+      <div class="dm-time">${timeAgo(c.lastAt)}</div>
+    </div>`;
+  }).join('');
 }
-async function submitReport() {
-  closeModal('reportModal');
-  if(!currentUser){toast('Sign in to report.','error');return;}
-  try {
-    await addDoc(collection(db,'reports'),{
-      type:reportTarget?.type, targetId:reportTarget?.id,
-      reason:document.getElementById('reportReason').value,
-      details:document.getElementById('reportDetails').value,
-      reportedBy:currentUser.uid, createdAt:serverTimestamp(),
+
+function showNewDM(){
+  if(!CU){toast('Sign in first.','error');return;}
+  $('newDMModal').classList.add('open');
+}
+function startNewDM(){
+  const uid=$('newDMUid').value.trim(),name=$('newDMName').value.trim();
+  if(!uid||!name){toast('Please fill in both fields.','error');return;}
+  closeModal('newDMModal');
+  openDM(uid,name);
+}
+
+function openDM(targetUid,targetName){
+  if(!CU){toast('Sign in to send DMs.','error');goPage('profile');return;}
+  if(dmUnsub){dmUnsub();dmUnsub=null;}
+  dmTarget={uid:targetUid,name:targetName};
+  $('dmSheetTitle').textContent=`✉️ ${targetName}`;
+  const msgs=$('dmMsgs');
+  msgs.innerHTML=`<div style="text-align:center;padding:16px"><span class="spin" style="border-top-color:var(--navy)"></span></div>`;
+  $('chatBack').classList.add('open');
+  $('dmSheet').classList.add('open');
+  const cid=dmId(CU.uid,targetUid);
+  const q=query(collection(db,'dmConvos',cid,'messages'),orderBy('createdAt','asc'));
+  dmUnsub=onSnapshot(q,snap=>{
+    if(!snap.docs.length){msgs.innerHTML=`<div style="text-align:center;color:var(--text3);font-style:italic;font-family:'EB Garamond',serif;padding:24px 14px;font-size:1rem;">Start your conversation…</div>`;return;}
+    msgs.innerHTML=snap.docs.map(d=>{const m=d.data();const mine=m.authorId===CU.uid;
+      return `<div class="msg ${mine?'mine':'theirs'}"><div class="msg-author">${esc(m.authorName)}</div>${esc(m.text)}<div class="msg-time">${timeAgo(m.createdAt)}</div></div>`;
+    }).join('');
+    msgs.scrollTop=msgs.scrollHeight;
+  });
+  // mark read
+  const cref=doc(db,'dmConvos',cid);
+  setDoc(cref,{[`unread.${CU.uid}`]:false},{merge:true}).catch(()=>{});
+  setTimeout(()=>$('dmIn').focus(),350);
+}
+function closeDMSheet(){
+  $('dmSheet').classList.remove('open');
+  $('chatBack').classList.remove('open');
+  if(dmUnsub){dmUnsub();dmUnsub=null;}
+  dmTarget=null;
+}
+async function sendDM(){
+  if(!CU||!dmTarget)return;
+  const inp=$('dmIn');const text=inp.value.trim();if(!text)return;
+  if(hasProf(text)){toast('Please keep messages respectful.','error');return;}
+  const cid=dmId(CU.uid,dmTarget.uid);
+  const myName=CU.displayName||CU.email.split('@')[0];
+  inp.value='';
+  try{
+    await addDoc(collection(db,'dmConvos',cid,'messages'),{
+      text,authorId:CU.uid,authorName:myName,createdAt:serverTimestamp(),
     });
-    toast('Report submitted. Thank you for keeping the platform safe. ✝️','success');
-  } catch(e){toast('Could not submit report.','error');}
+    // update convo meta
+    await setDoc(doc(db,'dmConvos',cid),{
+      participants:[CU.uid,dmTarget.uid],
+      names:{[CU.uid]:myName,[dmTarget.uid]:dmTarget.name},
+      lastMsg:text,lastAt:serverTimestamp(),
+      [`unread.${dmTarget.uid}`]:true,
+      [`unread.${CU.uid}`]:false,
+    },{merge:true});
+  }catch(e){toast('Error sending DM.','error');inp.value=text;}
+}
+
+/* ─────────────── REPORT ─────────────── */
+function showReport(type,id){
+  if(!CU){toast('Sign in to report.','error');return;}
+  reportTarget={type,id};
+  $('reportModal').classList.add('open');
+}
+async function submitReport(){
+  closeModal('reportModal');
+  if(!CU||!reportTarget)return;
+  try{
+    await addDoc(collection(db,'reports'),{
+      type:reportTarget.type,targetId:reportTarget.id,
+      reason:$('reportReason').value,
+      details:$('reportDetails').value,
+      reportedBy:CU.uid,reportedByName:CU.displayName||CU.email,
+      status:'open',createdAt:serverTimestamp(),
+    });
+    toast('Report submitted. Thank you. ✝️','success');
+  }catch(e){toast('Could not submit report.','error');}
   reportTarget=null;
 }
 
-// close modal on backdrop click
-document.getElementById('reportModal').addEventListener('click',function(e){if(e.target===this)closeModal('reportModal');});
+/* ─────────────── DELETE ─────────────── */
+function showDelete(type,id,parentId,label){
+  deleteTarget={type,id,parentId};
+  $('deleteMsg').textContent=`Delete this ${label}? This cannot be undone.`;
+  $('deleteModal').classList.add('open');
+}
+async function confirmDelete(){
+  closeModal('deleteModal');
+  if(!deleteTarget||!isMod){toast('Not authorized.','error');return;}
+  try{
+    if(deleteTarget.type==='question'){
+      await deleteDoc(doc(db,'questions',deleteTarget.id));
+      toast('Question deleted.','success');
+    }else if(deleteTarget.type==='comment'){
+      await deleteDoc(doc(db,'questions',deleteTarget.parentId,'comments',deleteTarget.id));
+      await updateDoc(doc(db,'questions',deleteTarget.parentId),{commentCount:increment(-1)});
+      toast('Answer deleted.','success');
+    }else if(deleteTarget.type==='report'){
+      await updateDoc(doc(db,'reports',deleteTarget.id),{status:'resolved',resolvedBy:CU.uid,resolvedAt:serverTimestamp()});
+      toast('Report resolved.','success');
+    }
+    renderModReports();renderModQuestions();
+  }catch(e){toast('Error: '+e.message,'error');}
+  deleteTarget=null;
+}
+function modDeleteQ(id){if(isMod)showDelete('question',id,null,'question');}
+function modDeleteC(qid,cid){if(isMod)showDelete('comment',cid,qid,'answer');}
+async function modBanUser(uid,name){
+  if(!isMod)return;
+  if(!confirm(`Ban user ${name}? They will not be able to post.`))return;
+  try{
+    await setDoc(doc(db,'users',uid),{banned:true,bannedBy:CU.uid,bannedAt:serverTimestamp()},{merge:true});
+    toast(`${name} has been banned.`,'success');
+    renderModUsers();
+  }catch(e){toast('Error: '+e.message,'error');}
+}
+
+/* ─────────────── MOD PANEL ─────────────── */
+function modTab(t,el){
+  document.querySelectorAll('.mod-tab').forEach(b=>b.classList.remove('active'));
+  document.querySelectorAll('.mod-section').forEach(s=>s.classList.remove('active'));
+  el.classList.add('active');
+  $('mod'+t.charAt(0).toUpperCase()+t.slice(1)).classList.add('active');
+  if(t==='reports')renderModReports();
+  if(t==='questions')renderModQuestions();
+  if(t==='comments')$('modCListEl').innerHTML=`<div class="empty"><div class="ei">💬</div><p>Click a question above to see its answers.</p></div>`;
+  if(t==='users')renderModUsers();
+}
+
+async function renderModReports(){
+  if(!isMod)return;
+  const el=$('reportsListEl');
+  el.innerHTML=`<div style="text-align:center;padding:16px"><span class="spin" style="border-top-color:var(--mod)"></span></div>`;
+  try{
+    const snap=await getDocs(query(collection(db,'reports'),where('status','==','open'),orderBy('createdAt','desc')));
+    if(!snap.docs.length){el.innerHTML=`<div class="empty"><div class="ei">✅</div><p>No open reports!</p></div>`;return;}
+    el.innerHTML=snap.docs.map(d=>{const r=d.data();return `
+      <div class="report-card">
+        <div class="rc-type">⚑ ${r.type} report</div>
+        <div class="rc-reason">${esc(r.reason)}</div>
+        ${r.details?`<div class="rc-detail">${esc(r.details)}</div>`:''}
+        <div class="rc-meta">Reported by: ${esc(r.reportedByName||'—')} · ${timeAgo(r.createdAt)}<br>Target ID: <code>${esc(r.targetId)}</code></div>
+        <div class="rc-actions">
+          ${r.type==='question'?`<button class="btn btn-danger" style="font-size:.75rem;padding:6px 11px" onclick="modDeleteQ('${r.targetId}');showDelete('report','${d.id}',null,'report')">Delete Question</button>`:''}
+          ${r.type==='comment'?`<button class="btn btn-danger" style="font-size:.75rem;padding:6px 11px" onclick="modDeleteC('unknown','${r.targetId}')">Delete Answer</button>`:''}
+          <button class="btn btn-mod" style="font-size:.75rem;padding:6px 11px" onclick="showDelete('report','${d.id}',null,'report')">Mark Resolved</button>
+        </div>
+      </div>`;
+    }).join('');
+  }catch(e){el.innerHTML=`<div class="empty"><p>Error loading reports.<br>${e.message}</p></div>`;}
+}
+
+async function renderModQuestions(){
+  if(!isMod)return;
+  const el=$('modQListEl');
+  el.innerHTML=`<div style="text-align:center;padding:16px"><span class="spin" style="border-top-color:var(--mod)"></span></div>`;
+  try{
+    const snap=await getDocs(query(collection(db,'questions'),orderBy('createdAt','desc'),limit(50)));
+    if(!snap.docs.length){el.innerHTML=`<div class="empty"><p>No questions.</p></div>`;return;}
+    el.innerHTML=snap.docs.map(d=>{const q=d.data();return `
+      <div class="mod-item-card">
+        <div class="mi-title">${esc(q.title)}</div>
+        <div class="mi-meta">${esc(q.authorName||'—')} · ${esc(q.topic)} · ${timeAgo(q.createdAt)} · ${q.commentCount||0} answers</div>
+        ${q.body?`<div class="mi-body">${esc(q.body)}</div>`:''}
+        <div class="mi-actions">
+          <button class="btn" style="font-size:.73rem;padding:5px 10px;background:var(--surface2);border:1px solid var(--border);color:var(--text2);" onclick="loadModComments('${d.id}','${esc(q.title)}')">View Answers</button>
+          <button class="btn btn-danger" style="font-size:.73rem;padding:5px 10px" onclick="modDeleteQ('${d.id}')">🗑 Delete</button>
+        </div>
+      </div>`;
+    }).join('');
+  }catch(e){el.innerHTML=`<div class="empty"><p>${e.message}</p></div>`;}
+}
+
+async function loadModComments(qid,qtitle){
+  modTab('comments',document.querySelectorAll('.mod-tab')[2]);
+  const el=$('modCListEl');
+  el.innerHTML=`<p style="font-size:.8rem;color:var(--text3);margin-bottom:10px">Answers for: <em>${esc(qtitle)}</em></p><div style="text-align:center;padding:14px"><span class="spin" style="border-top-color:var(--mod)"></span></div>`;
+  try{
+    const snap=await getDocs(query(collection(db,'questions',qid,'comments'),orderBy('createdAt','asc')));
+    if(!snap.docs.length){el.innerHTML+=`<div class="empty"><p>No answers yet.</p></div>`;return;}
+    const list=snap.docs.map(d=>{const c=d.data();return `
+      <div class="mod-item-card">
+        <div class="mi-meta">${esc(c.authorName||'—')} · ${timeAgo(c.createdAt)}</div>
+        <div class="mi-body" style="-webkit-line-clamp:unset;display:block">${esc(c.text)}</div>
+        <div class="mi-actions">
+          <button class="btn btn-danger" style="font-size:.73rem;padding:5px 10px" onclick="modDeleteC('${qid}','${d.id}')">🗑 Delete Answer</button>
+        </div>
+      </div>`;
+    }).join('');
+    el.innerHTML=`<p style="font-size:.8rem;color:var(--text3);margin-bottom:10px">Answers for: <em>${esc(qtitle)}</em></p>`+list;
+  }catch(e){el.innerHTML+=`<p style="color:var(--danger);font-size:.8rem">${e.message}</p>`;}
+}
+
+async function renderModUsers(){
+  if(!isMod)return;
+  const el=$('modUListEl');
+  el.innerHTML=`<div style="text-align:center;padding:16px"><span class="spin" style="border-top-color:var(--mod)"></span></div>`;
+  try{
+    const snap=await getDocs(query(collection(db,'users'),limit(100)));
+    if(!snap.docs.length){el.innerHTML=`<div class="empty"><p>No users.</p></div>`;return;}
+    el.innerHTML=snap.docs.map(d=>{const u=d.data();const uid=d.id;return `
+      <div class="mod-item-card">
+        <div style="display:flex;align-items:center;gap:8px;margin-bottom:4px">
+          <div class="q-av" style="width:32px;height:32px">${(u.displayName||'?')[0].toUpperCase()}</div>
+          <div>
+            <div style="font-weight:700;font-size:.88rem">${esc(u.displayName||'—')} ${u.isMod?'<span class="mod-badge">MOD</span>':''} ${u.banned?'<span class="banned-badge">BANNED</span>':''}</div>
+            <div class="mi-meta">${esc(u.email||'—')}</div>
+          </div>
+        </div>
+        <div class="mi-actions">
+          ${!u.isMod?`<button class="btn btn-mod" style="font-size:.72rem;padding:5px 9px" onclick="makeUserMod('${uid}','${esc(u.displayName||'')}')">🛡 Make Mod</button>`:''}
+          ${!u.banned?`<button class="btn btn-danger" style="font-size:.72rem;padding:5px 9px" onclick="modBanUser('${uid}','${esc(u.displayName||'')}')">🚫 Ban</button>`:''}
+          ${u.banned?`<button class="btn" style="font-size:.72rem;padding:5px 9px;border:1px solid var(--border)" onclick="unbanUser('${uid}','${esc(u.displayName||'')}')">✅ Unban</button>`:''}
+        </div>
+      </div>`;
+    }).join('');
+  }catch(e){el.innerHTML=`<div class="empty"><p>${e.message}</p></div>`;}
+}
+async function makeUserMod(uid,name){
+  if(!isMod)return;
+  if(!confirm(`Make ${name} a moderator?`))return;
+  try{await setDoc(doc(db,'users',uid),{isMod:true},{merge:true});toast(`${name} is now a moderator.`,'success');renderModUsers();}
+  catch(e){toast('Error: '+e.message,'error');}
+}
+async function unbanUser(uid,name){
+  if(!isMod)return;
+  try{await setDoc(doc(db,'users',uid),{banned:false},{merge:true});toast(`${name} unbanned.`,'success');renderModUsers();}
+  catch(e){toast('Error: '+e.message,'error');}
+}
+
+/* ─────────────── MODAL ─────────────── */
+function closeModal(id){$(id).classList.remove('open');}
+document.querySelectorAll('.modal-overlay').forEach(m=>m.addEventListener('click',function(e){if(e.target===this)this.classList.remove('open');}));
+
+/* ─────────────── BIBLE (KJV via API) ─────────────── */
+// Using bible-api.com (free, no key needed)
+const BOOKS=[
+  'Genesis','Exodus','Leviticus','Numbers','Deuteronomy','Joshua','Judges','Ruth',
+  '1 Samuel','2 Samuel','1 Kings','2 Kings','1 Chronicles','2 Chronicles','Ezra','Nehemiah',
+  'Esther','Job','Psalms','Proverbs','Ecclesiastes','Song of Solomon','Isaiah','Jeremiah',
+  'Lamentations','Ezekiel','Daniel','Hosea','Joel','Amos','Obadiah','Jonah','Micah',
+  'Nahum','Habakkuk','Zephaniah','Haggai','Zechariah','Malachi',
+  'Matthew','Mark','Luke','John','Acts','Romans','1 Corinthians','2 Corinthians',
+  'Galatians','Ephesians','Philippians','Colossians','1 Thessalonians','2 Thessalonians',
+  '1 Timothy','2 Timothy','Titus','Philemon','Hebrews','James','1 Peter','2 Peter',
+  '1 John','2 John','3 John','Jude','Revelation'
+];
+const CHAP_COUNTS={
+  'Genesis':50,'Exodus':40,'Leviticus':27,'Numbers':36,'Deuteronomy':34,'Joshua':24,'Judges':21,'Ruth':4,
+  '1 Samuel':31,'2 Samuel':24,'1 Kings':22,'2 Kings':25,'1 Chronicles':29,'2 Chronicles':36,'Ezra':10,'Nehemiah':13,
+  'Esther':10,'Job':42,'Psalms':150,'Proverbs':31,'Ecclesiastes':12,'Song of Solomon':8,'Isaiah':66,'Jeremiah':52,
+  'Lamentations':5,'Ezekiel':48,'Daniel':12,'Hosea':14,'Joel':3,'Amos':9,'Obadiah':1,'Jonah':4,'Micah':7,
+  'Nahum':3,'Habakkuk':3,'Zephaniah':3,'Haggai':2,'Zechariah':14,'Malachi':4,
+  'Matthew':28,'Mark':16,'Luke':24,'John':21,'Acts':28,'Romans':16,'1 Corinthians':16,'2 Corinthians':13,
+  'Galatians':6,'Ephesians':6,'Philippians':4,'Colossians':4,'1 Thessalonians':5,'2 Thessalonians':3,
+  '1 Timothy':6,'2 Timothy':4,'Titus':3,'Philemon':1,'Hebrews':13,'James':5,'1 Peter':5,'2 Peter':3,
+  '1 John':5,'2 John':1,'3 John':1,'Jude':1,'Revelation':22
+};
+let bibleInited=false,curBook='John',curChap=1;
+
+function initBible(){
+  bibleInited=true;
+  const sel=$('bibleBook');
+  BOOKS.forEach(b=>{const o=document.createElement('option');o.value=b;o.textContent=b;if(b===curBook)o.selected=true;sel.appendChild(o);});
+  buildChapSelect();
+  loadChapter();
+}
+function onBookChange(){curBook=$('bibleBook').value;curChap=1;buildChapSelect();loadChapter();}
+function buildChapSelect(){
+  const sel=$('bibleChap');sel.innerHTML='';
+  const n=CHAP_COUNTS[curBook]||1;
+  for(let i=1;i<=n;i++){const o=document.createElement('option');o.value=i;o.textContent=`Ch. ${i}`;if(i===curChap)o.selected=true;sel.appendChild(o);}
+}
+function changeChap(d){
+  curChap+=d;const max=CHAP_COUNTS[curBook]||1;
+  if(curChap<1)curChap=1;if(curChap>max)curChap=max;
+  $('bibleChap').value=curChap;loadChapter();
+}
+async function loadChapter(){
+  curChap=parseInt($('bibleChap').value)||1;
+  curBook=$('bibleBook').value;
+  const max=CHAP_COUNTS[curBook]||1;
+  $('prevChapBtn').disabled=curChap<=1;
+  $('nextChapBtn').disabled=curChap>=max;
+  $('chapLabel').textContent=`${curBook} ${curChap}`;
+  const vl=$('verseList');
+  vl.innerHTML='<div class="bible-loading">Loading…</div>';
+  const bookSlug=curBook.toLowerCase().replace(/ /g,'+');
+  try{
+    const res=await fetch(`https://bible-api.com/${bookSlug}+${curChap}?translation=kjv`);
+    const data=await res.json();
+    if(!data.verses||!data.verses.length){vl.innerHTML='<div class="bible-loading">No verses found.</div>';return;}
+    vl.innerHTML=data.verses.map(v=>`
+      <div class="bible-verse">
+        <span class="vnum">${v.verse}</span>
+        <span class="vtxt">${esc(v.text.trim())}</span>
+      </div>
+    `).join('');
+    vl.scrollTop=0;
+  }catch(e){
+    vl.innerHTML=`<div class="bible-loading">Could not load. Check your connection.<br><small>${e.message}</small></div>`;
+  }
+}
 </script>
 </body>
 </html>
