@@ -647,16 +647,15 @@ select.field-input{cursor:pointer;}
 <div class="modal-overlay" id="newDMModal">
   <div class="modal">
     <h3>New Message</h3>
-    <p>Enter the username or email of who you'd like to message.</p>
-    <div class="form-group"><label class="field-label">Their Display Name</label>
-      <input class="field-input" id="newDMName" placeholder="e.g. Grace Walker">
+    <p>Enter the display name of who you'd like to message.</p>
+    <div class="form-group">
+      <label class="field-label">Their Display Name</label>
+      <input class="field-input" id="newDMName" placeholder="e.g. Grace Walker" onkeydown="if(event.key==='Enter')startNewDM()">
     </div>
-    <div class="form-group"><label class="field-label">Their User ID</label>
-      <input class="field-input" id="newDMUid" placeholder="Paste from their profile (or from a question)">
-    </div>
+    <div class="error-box" id="newDMErr"></div>
     <div class="modal-btns">
       <button class="btn btn-ghost" onclick="closeModal('newDMModal')">Cancel</button>
-      <button class="btn btn-primary" onclick="startNewDM()">Open Chat</button>
+      <button class="btn btn-primary" id="newDMBtn" onclick="startNewDM()">Open Chat</button>
     </div>
   </div>
 </div>
@@ -740,7 +739,7 @@ let selTopicVal = 'Scripture';
 let isDark = false;
 
 // ── HARDCODED OWNER UID ── set this to YOUR Firebase UID
-const OWNER_UID = 'REPLACE_WITH_YOUR_UID';
+const OWNER_UID = 'i0P20BtEDMa7la1lZPlcKXoOWmq1';
 
 let chatQid = null;
 let chatUnsub = null;
@@ -1166,11 +1165,37 @@ function showNewDM(){
   if(!CU){toast('Sign in first.','error');return;}
   $('newDMModal').classList.add('open');
 }
-function startNewDM(){
-  const uid=$('newDMUid').value.trim(),name=$('newDMName').value.trim();
-  if(!uid||!name){toast('Please fill in both fields.','error');return;}
-  closeModal('newDMModal');
-  openDM(uid,name);
+async function startNewDM(){
+  const name=$('newDMName').value.trim();
+  const err=$('newDMErr');
+  err.style.display='none';
+  if(!name){err.textContent='Please enter a display name.';err.style.display='block';return;}
+  if(!CU){toast('Sign in first.','error');return;}
+  setBtn('newDMBtn',true);
+  try{
+    // search users collection by displayName
+    const snap=await getDocs(query(collection(db,'users'),where('displayName','==',name),limit(1)));
+    if(snap.empty){
+      err.textContent=`No user found with the name "${name}". Names are case-sensitive.`;
+      err.style.display='block';
+      setBtn('newDMBtn',false,'Open Chat');
+      return;
+    }
+    const found=snap.docs[0];
+    if(found.id===CU.uid){
+      err.textContent="You can't message yourself!";
+      err.style.display='block';
+      setBtn('newDMBtn',false,'Open Chat');
+      return;
+    }
+    closeModal('newDMModal');
+    $('newDMName').value='';
+    openDM(found.id, found.data().displayName);
+  }catch(e){
+    err.textContent='Error: '+e.message;
+    err.style.display='block';
+  }
+  setBtn('newDMBtn',false,'Open Chat');
 }
 
 function openDM(targetUid,targetName){
