@@ -1339,9 +1339,10 @@ async function renderModReports(){
   const el=$('reportsListEl');
   el.innerHTML=`<div style="text-align:center;padding:16px"><span class="spin" style="border-top-color:var(--mod)"></span></div>`;
   try{
-    const snap=await getDocs(query(collection(db,'reports'),where('status','==','open'),orderBy('createdAt','desc')));
-    if(!snap.docs.length){el.innerHTML=`<div class="empty"><div class="ei">✅</div><p>No open reports!</p></div>`;return;}
-    el.innerHTML=snap.docs.map(d=>{const r=d.data();
+    const snap=await getDocs(query(collection(db,'reports'),where('status','==','open')));
+    if(snap.empty){el.innerHTML=`<div class="empty"><div class="ei">✅</div><p>No open reports!</p></div>`;return;}
+    const sorted=snap.docs.sort((a,b)=>(b.data().createdAt?.toMillis?.()??0)-(a.data().createdAt?.toMillis?.()??0));
+    el.innerHTML=sorted.map(d=>{const r=d.data();
       const canDelQ=can.deleteQuestions()&&r.type==='question';
       const canDelC=can.deleteComments()&&r.type==='comment';
       const canResolve=can.resolveReports();
