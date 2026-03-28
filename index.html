@@ -740,7 +740,7 @@ let selTopicVal = 'Scripture';
 let isDark = false;
 
 // ── HARDCODED OWNER UID ── set this to YOUR Firebase UID
-const OWNER_UID = 'i0P20BtEDMa7la1lZPlcKXoOWmq1';
+const OWNER_UID = 'REPLACE_WITH_YOUR_UID';
 
 let chatQid = null;
 let chatUnsub = null;
@@ -804,6 +804,7 @@ Object.assign(window,{
   openChat,closeChat,sendMsg,openDM,sendDM,closeDMSheet,showNewDM,startNewDM,
   showReport,submitReport,closeModal,switchTab,selTopic,toggleAnon,
   modTab,modDeleteQ,modDeleteC,modBanUser,confirmDelete,setUserTier,unbanUser,
+  loadModComments,renderModUsers,
   onBookChange,changeChap,loadChapter,
 });
 
@@ -1123,9 +1124,15 @@ function dmId(a,b){return[a,b].sort().join('_');}
 async function loadDMConvos(){
   if(!CU)return;
   // Listen to DM convos where user is a participant
-  const q=query(collection(db,'dmConvos'),where('participants','array-contains',CU.uid),orderBy('lastAt','desc'));
+  const q=query(collection(db,'dmConvos'),where('participants','array-contains',CU.uid));
   onSnapshot(q,snap=>{
     dmConvos=snap.docs.map(d=>({id:d.id,...d.data()}));
+    // sort client-side so no composite index needed
+    dmConvos.sort((a,b)=>{
+      const at=a.lastAt?.toMillis?.()||0;
+      const bt=b.lastAt?.toMillis?.()||0;
+      return bt-at;
+    });
     renderDMList();
     // badge
     const unread=dmConvos.filter(c=>c.unread&&c.unread[CU.uid]).length;
