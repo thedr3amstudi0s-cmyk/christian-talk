@@ -1255,7 +1255,7 @@ async function checkVerified(){
     const cred=await signInWithEmailAndPassword(auth,$('joinEmail').value.trim(),$('joinPass').value);
     await reload(cred.user);
     if(cred.user.emailVerified){
-      toast(`Welcome to FaithFlow, ${cred.user.displayName}! ✝️`,'success');
+      toast(`Welcome to FaithFlow, ${cred.user.displayName}!`,'success');
       goPage('feed');
       $('joinStep1').style.display='block';$('joinStep2').style.display='none';
     }else{
