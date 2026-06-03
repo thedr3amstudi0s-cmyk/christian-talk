@@ -790,9 +790,109 @@ function timeAgo(ts){
   if(m<1)return'just now';if(m<60)return`${m}m ago`;if(h<24)return`${h}h ago`;if(dy<30)return`${dy}d ago`;
   return new Date(ms).toLocaleDateString();
 }
-const PROF=['damn','hell','crap','ass','bastard','idiot','stupid','dumb','loser','wtf','bs','shit','fuck'];
-function hasProf(t){const l=t.toLowerCase();return PROF.some(w=>l.includes(w));}
-function cleanProf(t){let o=t;PROF.forEach(w=>{o=o.replace(new RegExp(w,'gi'),'*'.repeat(w.length));});return o;}
+/* ─────────────── IMPROVED PROFANITY FILTER ─────────────── */
+const PROF_BASE = [
+    // Strong
+    "fuck", "shit", "bitch", "cunt", "asshole", "bastard", "dick", "pussy", "cock", "whore",
+    "nigger", "faggot", "retard", "slut", "twat", "wanker", "bollocks", "cocksucker", "motherfucker",
+    "fucker", "shithead", "dickhead", "piss", "crap", "damn", "hell", "goddamn", "jesusfuck",
+    
+    // Medium / Common
+    "idiot", "stupid", "dumb", "moron", "imbecile", "jackass", "douche", "loser", "creep",
+    "prick", "arse", "bloody", "bugger", "tosser", "wank", "tit", "boob", "knob", "bellend",
+    
+    // Sexual / Vulgar
+    "rape", "rapist", "porn", "sexy", "horny", "cum", "jizz", "semen", "orgasm", "clit",
+    "vagina", "penis", "labia", "testicle", "balls", "tits", "boobs", "ass", "butt", "fart",
+    
+    // Hate / Slurs
+    "kike", "spic", "chink", "gook", "wetback", "tranny", "dyke", "fag", "homo", "queer",
+    "mong", "spaz", "cripple", "midget", "pedo", "incel", "simp", "cuck", "beta",
+    
+    // More modern/offensive
+    "skank", "hoe", "thot", "simp", "cuckold", "virgin", "incel", "soyboy", "neckbeard",
+    "Karen", "snowflake", "libtard", "trumpet", "biden", "nazi", "racist", "bigot"
+];
+
+const LEET_MAP = {
+    'a': ['@', '4', 'а'],
+    'b': ['8', 'ß'],
+    'c': ['(', '¢'],
+    'e': ['3', '€'],
+    'f': ['ph'],
+    'g': ['9', '6'],
+    'h': ['#'],
+    'i': ['1', '!', 'í'],
+    'l': ['1', '|'],
+    'o': ['0', 'ø'],
+    's': ['5', '$', '§'],
+    't': ['7', '+'],
+    'u': ['v'],
+    'w': ['vv', 'ʍ'],
+    'z': ['2']
+};
+
+// Generate all leetspeak variations
+function generateLeetVariations(word) {
+    let variations = [word];
+    const lower = word.toLowerCase();
+    
+    for (let i = 0; i < lower.length; i++) {
+        const char = lower[i];
+        if (LEET_MAP[char]) {
+            LEET_MAP[char].forEach(replacement => {
+                const newWord = lower.slice(0, i) + replacement + lower.slice(i + 1);
+                variations.push(newWord);
+                // Also try double letters like fuuuck
+                if (replacement.length === 1) {
+                    variations.push(lower.slice(0, i) + replacement + replacement + lower.slice(i + 1));
+                }
+            });
+        }
+    }
+    return [...new Set(variations)];
+}
+
+// Full expanded profanity list with leetspeak
+const PROF = [...PROF_BASE];
+PROF_BASE.forEach(word => {
+    PROF.push(...generateLeetVariations(word));
+});
+
+// Remove duplicates and sort
+const PROFANITY_LIST = [...new Set(PROF.map(w => w.toLowerCase()))].sort();
+
+// Final check function
+function hasProf(text) {
+    if (!text || typeof text !== 'string') return false;
+    
+    const cleanText = text.toLowerCase()
+        .replace(/[^a-z0-9@#$!()]/g, '')  // remove most punctuation
+        .replace(/ +/g, '');               // remove spaces
+    
+    return PROFANITY_LIST.some(badWord => {
+        // Direct match
+        if (cleanText.includes(badWord)) return true;
+        
+        // Word boundary aware
+        const regex = new RegExp(`\\b${badWord}\\b|\\b${badWord}`, 'i');
+        if (regex.test(text)) return true;
+        
+        return false;
+    });
+}
+
+function cleanProf(text) {
+    if (!text) return text;
+    let cleaned = text;
+    
+    PROFANITY_LIST.forEach(badWord => {
+        const regex = new RegExp(badWord, 'gi');
+        cleaned = cleaned.replace(regex, '*'.repeat(Math.max(3, badWord.length)));
+    });
+    
+    return cleaned;
+}
 function setBtn(id,loading,orig){
   const b=$(id);if(!b)return;
   if(loading){b.disabled=true;b.innerHTML='<span class="spin"></span>';}
